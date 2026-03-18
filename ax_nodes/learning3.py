@@ -102,12 +102,12 @@ class ContrastResidualGeodesic(Node):
         w = np.asarray(self._w, dtype=np.float64)
         x = np.asarray(self.inputs, dtype=np.float64).ravel()
 
-        # Max-decay temporal integration (runs regardless of is_learning)
+        # EMA temporal integration (runs regardless of is_learning)
         gamma = float(self.trail_decay)
         if self._ema_buffer is None:
             self._ema_buffer = x.copy()
         else:
-            self._ema_buffer = np.maximum(x, gamma * self._ema_buffer)
+            self._ema_buffer = (1.0 - gamma) * x + gamma * self._ema_buffer
         x = self._ema_buffer
         self.ema_input_preview = to_display_grid(x)
 

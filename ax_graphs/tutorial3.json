@@ -4,10 +4,10 @@
   "name": "tutorial3",
   "viewport": {
     "pan": {
-      "x": 256.65379449356715,
-      "y": 439.09914343188257
+      "x": 340.9658729790374,
+      "y": 421.7458596951968
     },
-    "zoom": 0.5069484644877098
+    "zoom": 0.8451601268754986
   },
   "editor": {
     "drawer_collapsed": false,
@@ -23,14 +23,14 @@
       "type": "ContrastResidualGeodesic",
       "name": "ContrastResidualGeodesic",
       "position": {
-        "x": 170.23684249037558,
-        "y": -93.11505091649704
+        "x": 173.7864656973893,
+        "y": -90.74863544515449
       },
       "fields": {
         "amount": 49,
         "dim": 784,
         "step_fraction": 0.077,
-        "trail_decay": 0.732,
+        "trail_decay": 0.7010000000000001,
         "is_learning": true
       },
       "states": {}
@@ -73,11 +73,11 @@
       "states": {
         "stored_ref_a": {
           "_type": "ndarray_ref",
-          "file": "ax_data/b6241f8e6cd749a3811b40b11eee610a.npy"
+          "file": "ax_data/b9d0791f088747be85ab21f08fad21a5.npy"
         },
         "stored_ref_b": {
           "_type": "ndarray_ref",
-          "file": "ax_data/d71c5206cfa544d2a7ff491d06b6382e.npy"
+          "file": "ax_data/5c50856c7a94420aa272944a001e3f88.npy"
         },
         "reference_length": 49
       }
@@ -98,15 +98,15 @@
         "interp_mode": "Smooth"
       },
       "states": {
-        "frame_idx": 116,
+        "frame_idx": 7,
         "pose_indices": [
-          11,
+          8,
           5,
-          9
+          13
         ],
         "walk_directions": [
-          -1,
-          -1
+          1,
+          1
         ],
         "cache_key": ""
       }
@@ -140,7 +140,7 @@
         "center_col": null,
         "cached_mask": {
           "_type": "ndarray_ref",
-          "file": "ax_data/5301cfcff57547739cf043431efa105f.npy"
+          "file": "ax_data/33f9abd1100741a7a1284792eff242b8.npy"
         }
       }
     },
@@ -158,7 +158,7 @@
       "states": {
         "history": {
           "_type": "ndarray_ref",
-          "file": "ax_data/302ee81d857d41209ecb87abb408eb77.npy"
+          "file": "ax_data/4201d9d441b64554a30b0447afda5d1e.npy"
         },
         "history_count": 200
       }

@@ -72,12 +72,12 @@ def crg_process(state, x_input, step_fraction=0.02, trail_decay=0.0, is_learning
     w = np.asarray(state["w"], dtype=np.float64)
     x = np.asarray(x_input, dtype=np.float64).ravel()
 
-    # Max-decay temporal integration (runs regardless of is_learning)
+    # EMA temporal integration (runs regardless of is_learning)
     gamma = float(trail_decay)
     if state["trail_buffer"] is None:
         state["trail_buffer"] = x.copy()
     else:
-        state["trail_buffer"] = np.maximum(x, gamma * state["trail_buffer"])
+        state["trail_buffer"] = (1.0 - gamma) * x + gamma * state["trail_buffer"]
     x = state["trail_buffer"]
 
     # Renormalize templates
