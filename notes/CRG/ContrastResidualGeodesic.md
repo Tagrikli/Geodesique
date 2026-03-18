@@ -105,7 +105,11 @@ Where $\eta$ is the step fraction (learning rate). The rotation angle $\theta_i$
 
 ## How the Residual Subsumes Pull and Push
 
-The residual $\mathbf{r}_i = \hat{\mathbf{x}} - \hat{\mathbf{x}}_{\text{shadow},i}$ can be decomposed:
+The residual
+
+$$\mathbf{r}_i = \hat{\mathbf{x}} - \hat{\mathbf{x}}_{\text{shadow},i}$$
+
+can be decomposed:
 
 - The $+\hat{\mathbf{x}}$ component pulls the template toward the input (attraction).
 - The $-\hat{\mathbf{x}}_{\text{shadow},i}$ component pushes the template away from what others explain (repulsion).
