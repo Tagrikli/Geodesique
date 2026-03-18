@@ -48,13 +48,13 @@ $$\hat{\mathbf{x}}_{\text{shadow},i} = \frac{\mathbf{x}_{\text{shadow},i}}{\|\ma
 
 ### Step 4: Shadow Overlap (Dendrite-to-Soma Projection)
 
-$$\text{shadow\_overlap}_i = \mathbf{w}_i \cdot \mathbf{x}_{\text{shadow},i}$$
+$$\text{shadow overlap}_i = \mathbf{w}_i \cdot \mathbf{x}_{\text{shadow},i}$$
 
 Note: this uses the **unnormalized** shadow vector, not $\hat{\mathbf{x}}_{\text{shadow},i}$. The inhibition therefore scales with the **magnitude** of the collective explanation, not just its direction. A population that barely explains the input inhibits weakly; a population that strongly explains it inhibits strongly.
 
 Expanding:
 
-$$\text{shadow\_overlap}_i = \mathbf{w}_i \cdot \sum_{j \neq i} a_{\text{raw},j} \cdot \mathbf{w}_j = \sum_{j \neq i} a_{\text{raw},j} \cdot (\mathbf{w}_i \cdot \mathbf{w}_j)$$
+$$\text{shadow overlap}_i = \mathbf{w}_i \cdot \sum_{j \neq i} a_{\text{raw},j} \cdot \mathbf{w}_j = \sum_{j \neq i} a_{\text{raw},j} \cdot (\mathbf{w}_i \cdot \mathbf{w}_j)$$
 
 This is unbounded above (it grows with population size and activation strength):
 
@@ -64,7 +64,7 @@ This is unbounded above (it grows with population size and activation strength):
 
 ### Step 5: LOO-Inhibited Activation (Soma Output)
 
-$$a_i = \max(s_i - \text{shadow\_overlap}_i, \, 0) \cdot \|\mathbf{x}\|$$
+$$a_i = \max(s_i - \text{shadow overlap}_i, \, 0) \cdot \|\mathbf{x}\|$$
 
 The activation is the raw cosine similarity minus the strength-weighted redundancy with the collective, scaled by input magnitude. Templates that are redundant with a strong collective get suppressed; templates that capture unique structure---or that dominate a weak collective---survive.
 

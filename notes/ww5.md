@@ -33,7 +33,7 @@ This identifies who "owns" the current input functionally.
 
 ### 2. Learning Pass (Structural Adaptation)
 - **Effective Attraction (Functional Pull)**: Templates are attracted to the input proportionally to their *inhibited* activation $s'_i$ (the output of the `Hyperpolarization` node), rather than their raw similarity.
-    - **Mechanism**: $\tau_i^{attr} = s'_i \cdot \text{geodesic\_tangent}(w_i \to x)$.
+    - **Mechanism**: $\tau_i^{attr} = s'_i \cdot \text{geodesic tangent}(w_i \to x)$.
     - **Rationale**: This ensures that only the "functional winner" of the competition receives a learning signal. It implements **Competitive Exclusion**—if Template A claims an input, it effectively "steals" the attraction force from Template B.
 - **Functional Push**: If Template A inhibits Template B, Template B receives a "push" away from the current input. This forces B to seek a different functional niche, even if its weights were already structurally orthogonal to A.
 

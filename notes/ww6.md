@@ -46,8 +46,8 @@ Pushing away from the raw input $x$ herds templates together toward the South Po
     - **Push Direction**: Away from the normalized reconstruction $\hat{x}_{recon}$.
 
 - **Force Formulation (V7)**: 
-    - $\tau_{pull, i} = \alpha_{pull} \cdot \text{geodesic\_tangent}(w_i \to \hat{x})$
-    - $\tau_{push, i} = (\alpha_{push} \cdot \text{inh}_i) \cdot \text{geodesic\_tangent}(w_i \to \hat{x}_{recon})$
+    - $\tau_{pull, i} = \alpha_{pull} \cdot \text{geodesic tangent}(w_i \to \hat{x})$
+    - $\tau_{push, i} = (\alpha_{push} \cdot \text{inh}_i) \cdot \text{geodesic tangent}(w_i \to \hat{x}_{recon})$
     - If $s_i > 0$: $\tau_{net, i} = \tau_{pull, i} - \tau_{push, i}$
     - If $s_i \le 0$: $\tau_{net, i} = \tau_{pull, i}$
 
@@ -119,8 +119,8 @@ Pushing away from the raw input $x$ herds templates together toward the South Po
 - **The Solution**: Two changes:
     1. **Normalized inhibition**: $\text{inh}_i = (A - a_i) / (A + \epsilon)$. Now $\text{inh}_i \in [0, 1]$ regardless of $n$ or $d$. Winner gets $\text{inh} \approx 0$, losers get $\text{inh} \approx 1$.
     2. **Single balance knob**: Replace `alpha_pull` and `alpha_push` with a single `balance` $\in [0, 1]$ that allocates a total force budget between pull and push:
-        - $\text{pull\_weight} = 1 - \text{balance}$
-        - $\text{push\_weight} = \text{balance}$
+        - $\text{pull weight} = 1 - \text{balance}$
+        - $\text{push weight} = \text{balance}$
 
 - **Force Formulation (V13)**:
     - $\tau_{net, i} = (1 - \text{balance}) \cdot \hat{\tau}_{pull, i} - (\text{balance} \cdot \text{inh}_i) \cdot \hat{\tau}_{push, i}$

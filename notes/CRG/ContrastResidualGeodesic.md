@@ -65,9 +65,9 @@ There is no separate pull/push decomposition. The residual naturally combines bo
 
 The inhibited activation uses the **unnormalized** shadow:
 
-$$\text{shadow\_overlap}_i = \max(\mathbf{w}_i \cdot \mathbf{x}_{\text{shadow},i}, \, 0)$$
+$$\text{shadow overlap}_i = \max(\mathbf{w}_i \cdot \mathbf{x}_{\text{shadow},i}, \, 0)$$
 
-$$a_{\text{inh},i} = \max(s_i - \text{shadow\_overlap}_i, \, 0)$$
+$$a_{\text{inh},i} = \max(s_i - \text{shadow overlap}_i, \, 0)$$
 
 The clamping of `shadow_overlap` to non-negative ensures that templates in the opposite hemisphere from the collective shadow are not artificially boosted.
 
