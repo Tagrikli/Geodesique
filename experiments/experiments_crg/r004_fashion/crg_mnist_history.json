@@ -1,0 +1,17 @@
+[
+  {
+    "epoch": 1.0,
+    "recon_mse": 0.12630429905456297,
+    "raw_hoyer_sparsity": 0.4246482098855259,
+    "raw_gini_sparsity": 0.6548945860376197,
+    "raw_active_fraction": 0.5194988333333518,
+    "raw_mean_active_count": 51.94988333333333,
+    "inh_hoyer_sparsity": 0.4305480089183188,
+    "inh_gini_sparsity": 0.6606234520355423,
+    "inh_active_fraction": 0.5131511666666747,
+    "inh_mean_active_count": 51.31511666666667,
+    "inh_coactivation_overlap": 0.5810486608100953,
+    "inh_winner_entropy": 4.534255758078324,
+    "inh_dead_template_fraction": 0.0
+  }
+]

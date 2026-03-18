@@ -1,0 +1,117 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "asd",
+  "viewport": {
+    "pan": {
+      "x": 329.32788884058596,
+      "y": 263.80866589305793
+    },
+    "zoom": 1.08919178445186
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": true,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "AttentionMask_0",
+      "type": "AttentionMask",
+      "name": "AttentionMask",
+      "position": {
+        "x": 152.7928370818555,
+        "y": 197.5491595328536
+      },
+      "fields": {
+        "width": 28,
+        "height": 28,
+        "radius": 3.0
+      },
+      "states": {
+        "center_row": null,
+        "center_col": null,
+        "cached_mask": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/e5ce0838184f4e24a5d2ec11c8316596.npy"
+        }
+      }
+    },
+    {
+      "id": "RandomProjection2D_1",
+      "type": "RandomProjection2D",
+      "name": "RandomProjection2D",
+      "position": {
+        "x": 415.6012448507883,
+        "y": -2.1452471296287285
+      },
+      "fields": {},
+      "states": {
+        "stored_ref_a": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/8ebfb8107d354792ba85a70417177dce.npy"
+        },
+        "stored_ref_b": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/f821b4d39a444903a22a615a83e7882c.npy"
+        },
+        "reference_length": 784
+      }
+    },
+    {
+      "id": "DrawableMask_2",
+      "type": "DrawableMask",
+      "name": "DrawableMask",
+      "position": {
+        "x": -193.81275004545796,
+        "y": 125.99414993125671
+      },
+      "fields": {
+        "width": 28,
+        "height": 28
+      },
+      "states": {
+        "canvas_state": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/36a3c91606be48e18830380227ea0afc.npy"
+        }
+      }
+    },
+    {
+      "id": "PlotScatter_3",
+      "type": "PlotScatter",
+      "name": "PlotScatter",
+      "position": {
+        "x": 539.9420439498572,
+        "y": 245.40214922486774
+      },
+      "fields": {
+        "max_history": 200
+      },
+      "states": {
+        "history": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/413338d8d60c41fdbcd19e4fe22e4ad6.npy"
+        },
+        "history_count": 170
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "RandomProjection2D_1",
+      "from_output": "output",
+      "to_node": "PlotScatter_3",
+      "to_input": "input_value"
+    },
+    {
+      "from_node": "DrawableMask_2",
+      "from_output": "output",
+      "to_node": "RandomProjection2D_1",
+      "to_input": "input_data"
+    }
+  ]
+}

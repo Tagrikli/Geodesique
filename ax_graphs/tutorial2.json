@@ -1,0 +1,57 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "tutorial2",
+  "viewport": {
+    "pan": {
+      "x": 362.06861755158377,
+      "y": 652.5916885411159
+    },
+    "zoom": 0.5241299604268597
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": false,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "InputFashionMNIST_0",
+      "type": "InputFashionMNIST",
+      "name": "InputFashionMNIST",
+      "position": {
+        "x": 126.02297195135014,
+        "y": 527.5052471676255
+      },
+      "fields": {
+        "category_filter": -1.0,
+        "repeat": 1
+      },
+      "states": {
+        "idx": 0,
+        "repeat_counter": 0
+      }
+    },
+    {
+      "id": "InputDigitMNIST_1",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": 467.41008059863634,
+        "y": 478.70392897842544
+      },
+      "fields": {
+        "digit_filter": -1,
+        "repeat": 1
+      },
+      "states": {
+        "idx": 0,
+        "repeat_counter": 0
+      }
+    }
+  ],
+  "connections": []
+}

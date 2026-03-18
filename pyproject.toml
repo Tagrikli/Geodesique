@@ -1,0 +1,15 @@
+[project]
+name = "geodesique"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "axonforge",
+]
+
+[tool.uv.sources]
+axonforge = { path = "../MiniCortex", editable = true }
+
+[tool.pyright]
+extraPaths = ["../MiniCortex"]

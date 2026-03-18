@@ -1,0 +1,223 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "tutorial3",
+  "viewport": {
+    "pan": {
+      "x": 256.65379449356715,
+      "y": 439.09914343188257
+    },
+    "zoom": 0.5069484644877098
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": true,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 30
+  },
+  "nodes": [
+    {
+      "id": "ContrastResidualGeodesic_0",
+      "type": "ContrastResidualGeodesic",
+      "name": "ContrastResidualGeodesic",
+      "position": {
+        "x": 170.23684249037558,
+        "y": -93.11505091649704
+      },
+      "fields": {
+        "amount": 49,
+        "dim": 784,
+        "step_fraction": 0.077,
+        "trail_decay": 0.732,
+        "is_learning": true
+      },
+      "states": {}
+    },
+    {
+      "id": "DisplayVector_1",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 504.51146898237903,
+        "y": -139.25344594259363
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -0.0,
+        "vmax": 1.5
+      },
+      "states": {}
+    },
+    {
+      "id": "Reconstruction_2",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 470.97390155148753,
+        "y": 315.53343082357424
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "RandomProjection2D_3",
+      "type": "RandomProjection2D",
+      "name": "RandomProjection2D",
+      "position": {
+        "x": 977.9916842571222,
+        "y": 48.42654462806808
+      },
+      "fields": {},
+      "states": {
+        "stored_ref_a": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/b6241f8e6cd749a3811b40b11eee610a.npy"
+        },
+        "stored_ref_b": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/d71c5206cfa544d2a7ff491d06b6382e.npy"
+        },
+        "reference_length": 49
+      }
+    },
+    {
+      "id": "InputStickFighter_4",
+      "type": "InputStickFighter",
+      "name": "InputStickFighter",
+      "position": {
+        "x": -426.4007899446438,
+        "y": -106.43280705349271
+      },
+      "fields": {
+        "num_poses": 3,
+        "resolution": 28,
+        "speed": 10,
+        "render_mode": "Anti-Aliased",
+        "interp_mode": "Smooth"
+      },
+      "states": {
+        "frame_idx": 116,
+        "pose_indices": [
+          11,
+          5,
+          9
+        ],
+        "walk_directions": [
+          -1,
+          -1
+        ],
+        "cache_key": ""
+      }
+    },
+    {
+      "id": "Add_5",
+      "type": "Add",
+      "name": "Add",
+      "position": {
+        "x": -122.91253644228982,
+        "y": -8.313808834705059
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "AttentionMask_6",
+      "type": "AttentionMask",
+      "name": "AttentionMask",
+      "position": {
+        "x": -126.9501049744753,
+        "y": 133.00108979178512
+      },
+      "fields": {
+        "width": 28,
+        "height": 28,
+        "radius": 2.0
+      },
+      "states": {
+        "center_row": null,
+        "center_col": null,
+        "cached_mask": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/5301cfcff57547739cf043431efa105f.npy"
+        }
+      }
+    },
+    {
+      "id": "PlotScatter_7",
+      "type": "PlotScatter",
+      "name": "PlotScatter",
+      "position": {
+        "x": 859.9374104879228,
+        "y": 355.69099698115633
+      },
+      "fields": {
+        "max_history": 200
+      },
+      "states": {
+        "history": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/302ee81d857d41209ecb87abb408eb77.npy"
+        },
+        "history_count": 200
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "ContrastResidualGeodesic_0",
+      "from_output": "weights",
+      "to_node": "Reconstruction_2",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "ContrastResidualGeodesic_0",
+      "from_output": "input_mean",
+      "to_node": "Reconstruction_2",
+      "to_input": "input_mean"
+    },
+    {
+      "from_node": "DisplayVector_1",
+      "from_output": "output_data",
+      "to_node": "RandomProjection2D_3",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "ContrastResidualGeodesic_0",
+      "from_output": "activations",
+      "to_node": "DisplayVector_1",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "ContrastResidualGeodesic_0",
+      "from_output": "activations",
+      "to_node": "Reconstruction_2",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "AttentionMask_6",
+      "from_output": "output",
+      "to_node": "Add_5",
+      "to_input": "input_b"
+    },
+    {
+      "from_node": "InputStickFighter_4",
+      "from_output": "output_frame",
+      "to_node": "Add_5",
+      "to_input": "input_a"
+    },
+    {
+      "from_node": "Add_5",
+      "from_output": "output",
+      "to_node": "ContrastResidualGeodesic_0",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "RandomProjection2D_3",
+      "from_output": "output",
+      "to_node": "PlotScatter_7",
+      "to_input": "input_value"
+    }
+  ]
+}

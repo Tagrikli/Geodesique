@@ -1,0 +1,148 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "tutorial1",
+  "viewport": {
+    "pan": {
+      "x": 592.9372319278424,
+      "y": -290.51972162901075
+    },
+    "zoom": 0.41236937536931556
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": false,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "RandomProjection2D_0",
+      "type": "RandomProjection2D",
+      "name": "RandomProjection2D",
+      "position": {
+        "x": 262.2138125410481,
+        "y": -209.20531650158392
+      },
+      "fields": {},
+      "states": {
+        "stored_ref_a": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/4ef584a3db294b02b5c5560d1e203b8e.npy"
+        },
+        "stored_ref_b": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/6d343f66611f41e289e9c7cebcf9a0b7.npy"
+        },
+        "reference_length": 784
+      }
+    },
+    {
+      "id": "RandomProjectionSignature_1",
+      "type": "RandomProjectionSignature",
+      "name": "RandomProjectionSignature",
+      "position": {
+        "x": 253.21381254104813,
+        "y": -27.20531650158391
+      },
+      "fields": {},
+      "states": {
+        "reference_length": 784,
+        "stored_reference": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/cd7208a1c60f4189a3557993d9cac756.npy"
+        }
+      }
+    },
+    {
+      "id": "InputStickFighter_2",
+      "type": "InputStickFighter",
+      "name": "InputStickFighter",
+      "position": {
+        "x": -41.53352676497036,
+        "y": -212.58652992197707
+      },
+      "fields": {
+        "num_poses": 1,
+        "resolution": 28,
+        "speed": 30,
+        "render_mode": "Anti-Aliased",
+        "interp_mode": "Smooth"
+      },
+      "states": {
+        "frame_idx": 52,
+        "pose_indices": [
+          11
+        ],
+        "walk_directions": [],
+        "cache_key": ""
+      }
+    },
+    {
+      "id": "PlotScatter_3",
+      "type": "PlotScatter",
+      "name": "PlotScatter",
+      "position": {
+        "x": 544.7814510250955,
+        "y": -214.99214713896663
+      },
+      "fields": {
+        "max_history": 200
+      },
+      "states": {
+        "history": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/9f5ae70e68a648de98193a9df7bff1ad.npy"
+        },
+        "history_count": 44
+      }
+    },
+    {
+      "id": "PlotLine_4",
+      "type": "PlotLine",
+      "name": "PlotLine",
+      "position": {
+        "x": 376.9549429551832,
+        "y": 197.938026675696
+      },
+      "fields": {
+        "max_history": 100
+      },
+      "states": {
+        "history": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/2f83763f944f4383ba2ef9c6e5d5e5a4.npy"
+        },
+        "history_count": 44
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "InputStickFighter_2",
+      "from_output": "output_frame",
+      "to_node": "RandomProjection2D_0",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "InputStickFighter_2",
+      "from_output": "output_frame",
+      "to_node": "RandomProjectionSignature_1",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "RandomProjection2D_0",
+      "from_output": "output",
+      "to_node": "PlotScatter_3",
+      "to_input": "input_value"
+    },
+    {
+      "from_node": "RandomProjectionSignature_1",
+      "from_output": "output",
+      "to_node": "PlotLine_4",
+      "to_input": "input_value"
+    }
+  ]
+}
