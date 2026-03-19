@@ -4,10 +4,10 @@
   "name": "asd",
   "viewport": {
     "pan": {
-      "x": 329.32788884058596,
-      "y": 263.80866589305793
+      "x": 428.75547700591926,
+      "y": 400.0672999303128
     },
-    "zoom": 1.08919178445186
+    "zoom": 1.303823463908262
   },
   "editor": {
     "drawer_collapsed": false,
@@ -36,7 +36,7 @@
         "center_col": null,
         "cached_mask": {
           "_type": "ndarray_ref",
-          "file": "ax_data/e5ce0838184f4e24a5d2ec11c8316596.npy"
+          "file": "ax_data/729546562f324c6c90230cd7d2b7c13b.npy"
         }
       }
     },
@@ -52,11 +52,11 @@
       "states": {
         "stored_ref_a": {
           "_type": "ndarray_ref",
-          "file": "ax_data/8ebfb8107d354792ba85a70417177dce.npy"
+          "file": "ax_data/b06586916be84feca9c75b5efe533326.npy"
         },
         "stored_ref_b": {
           "_type": "ndarray_ref",
-          "file": "ax_data/f821b4d39a444903a22a615a83e7882c.npy"
+          "file": "ax_data/8e0622d393e04ece866499e16e500cd0.npy"
         },
         "reference_length": 784
       }
@@ -76,7 +76,7 @@
       "states": {
         "canvas_state": {
           "_type": "ndarray_ref",
-          "file": "ax_data/36a3c91606be48e18830380227ea0afc.npy"
+          "file": "ax_data/77d7e67ec86c4568ba4dbe01a33c23ca.npy"
         }
       }
     },
@@ -94,9 +94,9 @@
       "states": {
         "history": {
           "_type": "ndarray_ref",
-          "file": "ax_data/413338d8d60c41fdbcd19e4fe22e4ad6.npy"
+          "file": "ax_data/506d51fba2d046d8b0beb785ec8e0a6a.npy"
         },
-        "history_count": 170
+        "history_count": 200
       }
     }
   ],

@@ -11,7 +11,7 @@ from .utilities import to_display_grid
 class Reconstruction(Node):
     weights = InputPort("Weights", np.ndarray)
     activations = InputPort("Activations", np.ndarray)
-    input_mean = InputPort("Input Mean", np.ndarray)
+    input_mean = InputPort("Input Mean", float)
 
     result = OutputPort("Result", np.ndarray)
 
@@ -30,7 +30,7 @@ class Reconstruction(Node):
         result = self.weights.T @ self.activations
 
         if self.input_mean is not None:
-            result = result + float(self.input_mean)
+            result = result + self.input_mean
 
         self.result = result
         self.result_heatmap = to_display_grid(result)

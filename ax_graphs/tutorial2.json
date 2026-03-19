@@ -4,10 +4,10 @@
   "name": "tutorial2",
   "viewport": {
     "pan": {
-      "x": 362.06861755158377,
-      "y": 652.5916885411159
+      "x": 576.9094205404313,
+      "y": 611.0387405503299
     },
-    "zoom": 0.5241299604268597
+    "zoom": 1.2882826661638174
   },
   "editor": {
     "drawer_collapsed": false,
@@ -19,37 +19,32 @@
   },
   "nodes": [
     {
-      "id": "InputFashionMNIST_0",
-      "type": "InputFashionMNIST",
-      "name": "InputFashionMNIST",
+      "id": "InputSelfPlayingPingPong_2",
+      "type": "InputSelfPlayingPingPong",
+      "name": "InputSelfPlayingPingPong",
       "position": {
-        "x": 126.02297195135014,
-        "y": 527.5052471676255
+        "x": 142.22220886852423,
+        "y": 311.41505536219404
       },
       "fields": {
-        "category_filter": -1.0,
-        "repeat": 1
+        "size": 28,
+        "paddle_height": 6,
+        "paddle_width": 1,
+        "ball_size": 1,
+        "speed": 1,
+        "no_paddle": false,
+        "angle": 31.0
       },
       "states": {
-        "idx": 0,
-        "repeat_counter": 0
-      }
-    },
-    {
-      "id": "InputDigitMNIST_1",
-      "type": "InputDigitMNIST",
-      "name": "InputDigitMNIST",
-      "position": {
-        "x": 467.41008059863634,
-        "y": 478.70392897842544
-      },
-      "fields": {
-        "digit_filter": -1,
-        "repeat": 1
-      },
-      "states": {
-        "idx": 0,
-        "repeat_counter": 0
+        "ball_x": 10,
+        "ball_y": 7,
+        "ball_dx": 1,
+        "ball_dy": 1,
+        "phase_x": 0,
+        "phase_y": 956,
+        "left_y": 4,
+        "right_y": 4,
+        "step_count": 1
       }
     }
   ],

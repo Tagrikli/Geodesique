@@ -4,10 +4,10 @@
   "name": "tutorial1",
   "viewport": {
     "pan": {
-      "x": 592.9372319278424,
-      "y": -290.51972162901075
+      "x": 462.9284621892126,
+      "y": 159.27132436967037
     },
-    "zoom": 0.41236937536931556
+    "zoom": 1.213313467566722
   },
   "editor": {
     "drawer_collapsed": false,
@@ -30,11 +30,11 @@
       "states": {
         "stored_ref_a": {
           "_type": "ndarray_ref",
-          "file": "ax_data/4ef584a3db294b02b5c5560d1e203b8e.npy"
+          "file": "ax_data/78d5cdc6fc4449ad916b9173c2693b71.npy"
         },
         "stored_ref_b": {
           "_type": "ndarray_ref",
-          "file": "ax_data/6d343f66611f41e289e9c7cebcf9a0b7.npy"
+          "file": "ax_data/8f85f4c6b5684ca5b3d440c1793d35ed.npy"
         },
         "reference_length": 784
       }
@@ -52,7 +52,7 @@
         "reference_length": 784,
         "stored_reference": {
           "_type": "ndarray_ref",
-          "file": "ax_data/cd7208a1c60f4189a3557993d9cac756.npy"
+          "file": "ax_data/87b02fe694824398a12d4cbdf81499df.npy"
         }
       }
     },
@@ -61,8 +61,8 @@
       "type": "InputStickFighter",
       "name": "InputStickFighter",
       "position": {
-        "x": -41.53352676497036,
-        "y": -212.58652992197707
+        "x": -110.59557545845453,
+        "y": -190.8813146183106
       },
       "fields": {
         "num_poses": 1,
@@ -72,9 +72,9 @@
         "interp_mode": "Smooth"
       },
       "states": {
-        "frame_idx": 52,
+        "frame_idx": 57,
         "pose_indices": [
-          11
+          4
         ],
         "walk_directions": [],
         "cache_key": ""
@@ -94,9 +94,9 @@
       "states": {
         "history": {
           "_type": "ndarray_ref",
-          "file": "ax_data/9f5ae70e68a648de98193a9df7bff1ad.npy"
+          "file": "ax_data/b892e5eb5681432ab44c4999719e6fd6.npy"
         },
-        "history_count": 44
+        "history_count": 200
       }
     },
     {
@@ -113,9 +113,9 @@
       "states": {
         "history": {
           "_type": "ndarray_ref",
-          "file": "ax_data/2f83763f944f4383ba2ef9c6e5d5e5a4.npy"
+          "file": "ax_data/44b1746843fa43a3b9506a50eb6d0bb9.npy"
         },
-        "history_count": 44
+        "history_count": 100
       }
     }
   ],
