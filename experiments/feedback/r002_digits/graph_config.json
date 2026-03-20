@@ -1,0 +1,36 @@
+{
+  "feedback": {
+    "layer1_id": "SignedResidualLearning_1",
+    "layer2_id": "SignedResidualLearning_3",
+    "layer1_amount": 36,
+    "layer1_dim": 784,
+    "layer2_amount": 25,
+    "layer2_dim": 36,
+    "layer1_gain_strength": 15.790000000000001,
+    "layer2_gain_strength": 0.0,
+    "layer1_gain_sign_positive": true,
+    "layer1_trail_decay": 0.0,
+    "layer2_trail_decay": 0.508,
+    "layer1_weights_file": "ax_data/feedback1_SignedResidualLearning_1_w.npy",
+    "layer2_weights_file": "ax_data/feedback1_SignedResidualLearning_3_w.npy"
+  },
+  "no_feedback": {
+    "layer1_id": "SignedResidualLearning_4",
+    "layer2_id": "SignedResidualLearning_5",
+    "layer1_amount": 36,
+    "layer1_dim": 784,
+    "layer2_amount": 25,
+    "layer2_dim": 36,
+    "layer1_gain_strength": 0.0,
+    "layer2_gain_strength": 0.0,
+    "layer1_gain_sign_positive": true,
+    "layer1_trail_decay": 0.0,
+    "layer2_trail_decay": 0.0,
+    "layer1_weights_file": "ax_data/feedback1_SignedResidualLearning_4_w.npy",
+    "layer2_weights_file": "ax_data/feedback1_SignedResidualLearning_5_w.npy"
+  },
+  "input": {
+    "repeat": 10,
+    "blank_steps": 2
+  }
+}

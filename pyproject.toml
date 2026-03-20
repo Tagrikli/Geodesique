@@ -8,6 +8,7 @@ dependencies = [
     "axonforge",
     "cupy-cuda13x>=14.0.1",
     "matplotlib>=3.10.8",
+    "scikit-learn>=1.8.0",
     "tqdm>=4.67.3",
 ]
 

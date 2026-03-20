@@ -65,17 +65,18 @@ class SignedResidualLearning(Node):
         "Step (η)", default=0.05, min_val=0.0, max_val=0.5, step=0.001
     )
     gain_strength = Range(
-        "Gain (γ)", default=0.5, min_val=0.0, max_val=50.0, step=0.01
+        "Gain (γ)", default=0.5, min_val=0.0, max_val=1.0, step=0.01
     )
     trail_decay = Range(
         "Trail Decay (γ)", default=0.0, min_val=0.0, max_val=0.999, step=0.001, scale="log"
     )
     is_learning = Bool("Is Learning", default=True)
+    gain_sign_positive = Bool("Gain Sign (+)", default=False)
 
     weights = OutputPort("Weights", np.ndarray)
     raw_activations = OutputPort("Raw Act", np.ndarray)
     activations = OutputPort("Inh Act", np.ndarray)
-
+    feedback_out = OutputPort("Feedback", np.ndarray)
 
     w = State("Weights")
 
@@ -110,11 +111,9 @@ class SignedResidualLearning(Node):
         if self.feedback is not None:
             fb = np.asarray(self.feedback, dtype=np.float64).ravel()
             g_raw = fb @ w                          # project to pixel space
-            g_centered = g_raw - np.mean(g_raw)     # mean-center
-            g_norm = np.linalg.norm(g_centered) + eps
-            gamma = float(self.gain_strength)
-            gain = 1.0 + gamma * (g_centered / g_norm)  # modulator centered at 1
-            x = gain * x
+            #sign = 1 if self.gain_sign_positive else -1
+            #gain = 1.0 + (self.gain_strength * g_raw) * sign
+            x = g_raw * x
             self.gain_input_preview = to_display_grid(x)
 
         # EMA temporal integration (runs regardless of is_learning)
@@ -132,7 +131,11 @@ class SignedResidualLearning(Node):
         # 1. L2-normalize input (assumed already mean-centered by LGN)
         x_norm = np.linalg.norm(x)
         if x_norm < eps:
+            k = w.shape[0]
             self.weights = self.w
+            self.raw_activations = np.zeros(k)
+            self.activations = np.zeros(k)
+            self.feedback_out = np.zeros(w.shape[1])
             return
         x_hat = x / x_norm
 
@@ -178,6 +181,7 @@ class SignedResidualLearning(Node):
         self.weights = self.w
         self.raw_activations = s * x_norm
         self.activations = a_inh * x_norm
+        self.feedback_out = (a_inh * x_norm) @ w
 
         self.weights_preview = to_display_grid(self.w)
         self.raw_activations_preview = to_display_grid(s * x_norm)

@@ -1,0 +1,234 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "feedback1",
+  "viewport": {
+    "pan": {
+      "x": 894.8241078126807,
+      "y": 483.1436131278913
+    },
+    "zoom": 1.1859176150850046
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": true,
+    "console_height": 216,
+    "max_hz_enabled": true,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "LGN_0",
+      "type": "LGN",
+      "name": "LGN",
+      "position": {
+        "x": 190.0,
+        "y": 197.0
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "SignedResidualLearning_1",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 556.0193362512396,
+        "y": 10.728912328106588
+      },
+      "fields": {
+        "amount": 36,
+        "dim": 784,
+        "step_fraction": 0.009000000000000001,
+        "gain_strength": 1.0,
+        "trail_decay": 0.0,
+        "is_learning": true,
+        "gain_sign_positive": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/feedback1_SignedResidualLearning_1_w.npy"
+        }
+      }
+    },
+    {
+      "id": "SignedResidualLearning_3",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 893.8203657875686,
+        "y": 9.570750339384347
+      },
+      "fields": {
+        "amount": 25,
+        "dim": 36,
+        "step_fraction": 0.002,
+        "gain_strength": 1.0,
+        "trail_decay": 0.0,
+        "is_learning": true,
+        "gain_sign_positive": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/feedback1_SignedResidualLearning_3_w.npy"
+        }
+      }
+    },
+    {
+      "id": "SignedResidualLearning_4",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 530.1417394007935,
+        "y": 1399.3037485337602
+      },
+      "fields": {
+        "amount": 36,
+        "dim": 784,
+        "step_fraction": 0.01,
+        "gain_strength": 0.0,
+        "trail_decay": 0.0,
+        "is_learning": true,
+        "gain_sign_positive": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/feedback1_SignedResidualLearning_4_w.npy"
+        }
+      }
+    },
+    {
+      "id": "SignedResidualLearning_5",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 932.6785824430383,
+        "y": 1408.7335620465701
+      },
+      "fields": {
+        "amount": 25,
+        "dim": 36,
+        "step_fraction": 0.01,
+        "gain_strength": 0.0,
+        "trail_decay": 0.0,
+        "is_learning": true,
+        "gain_sign_positive": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/feedback1_SignedResidualLearning_5_w.npy"
+        }
+      }
+    },
+    {
+      "id": "DisplayVector_7",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 1323.7411591545185,
+        "y": 208.51336483939963
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "Reconstruction_10",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 1317.4136046928093,
+        "y": 669.6212194061525
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "Reconstruction_11",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 1313.5625301429523,
+        "y": 796.1791311029187
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "InputDigitMNIST_12",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": 178.0908052791499,
+        "y": 434.5917202881904
+      },
+      "fields": {
+        "digit_filter": -1,
+        "repeat": 10,
+        "blank_steps": 3
+      },
+      "states": {
+        "idx": 34576,
+        "repeat_counter": 7
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "activations",
+      "to_node": "SignedResidualLearning_3",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_3",
+      "from_output": "activations",
+      "to_node": "DisplayVector_7",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SignedResidualLearning_3",
+      "from_output": "weights",
+      "to_node": "Reconstruction_10",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "SignedResidualLearning_3",
+      "from_output": "activations",
+      "to_node": "Reconstruction_10",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "Reconstruction_10",
+      "from_output": "result",
+      "to_node": "Reconstruction_11",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "weights",
+      "to_node": "Reconstruction_11",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "InputDigitMNIST_12",
+      "from_output": "output_pattern",
+      "to_node": "LGN_0",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "LGN_0",
+      "from_output": "output_data",
+      "to_node": "SignedResidualLearning_1",
+      "to_input": "inputs"
+    }
+  ]
+}

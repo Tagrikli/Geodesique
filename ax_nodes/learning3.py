@@ -122,6 +122,9 @@ class ContrastResidualGeodesic(Node):
         x_c_norm = np.linalg.norm(x_c)
         if x_c_norm < eps:
             self.weights = self._w
+            self.raw_activations = np.zeros(n_templates)
+            self.activations = np.zeros(n_templates)
+            self.input_mean = np.array(x_mean)
             return
         x_hat = x_c / x_c_norm
 
