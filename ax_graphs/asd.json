@@ -4,89 +4,147 @@
   "name": "asd",
   "viewport": {
     "pan": {
-      "x": 428.75547700591926,
-      "y": 400.0672999303128
+      "x": 397.2387355700048,
+      "y": 562.1167359057083
     },
-    "zoom": 1.303823463908262
+    "zoom": 1.1859176150850046
   },
   "editor": {
     "drawer_collapsed": false,
-    "drawer_width": 260,
+    "drawer_width": 340,
     "console_collapsed": true,
     "console_height": 216,
-    "max_hz_enabled": false,
+    "max_hz_enabled": true,
     "max_hz_value": 60
   },
   "nodes": [
     {
-      "id": "AttentionMask_0",
-      "type": "AttentionMask",
-      "name": "AttentionMask",
+      "id": "DisplayVector_0",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
       "position": {
-        "x": 152.7928370818555,
-        "y": 197.5491595328536
+        "x": 953.1916295512945,
+        "y": -447.99853986078716
       },
       "fields": {
-        "width": 28,
-        "height": 28,
-        "radius": 3.0
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "ConvConfig_1",
+      "type": "ConvConfig",
+      "name": "ConvConfig",
+      "position": {
+        "x": -285.4482291744755,
+        "y": 76.81005268035187
+      },
+      "fields": {
+        "kernel_size": 4
+      },
+      "states": {}
+    },
+    {
+      "id": "ConvLGN_2",
+      "type": "ConvLGN",
+      "name": "ConvLGN",
+      "position": {
+        "x": 134.0824958720051,
+        "y": -347.14186088337124
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "ConvReconstruction_3",
+      "type": "ConvReconstruction",
+      "name": "ConvReconstruction",
+      "position": {
+        "x": 358.4198732804582,
+        "y": 929.3046476456743
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "ConvSRL_4",
+      "type": "ConvSRL",
+      "name": "ConvSRL",
+      "position": {
+        "x": 66.32987945788159,
+        "y": 97.94037431836676
+      },
+      "fields": {
+        "amount": 49,
+        "step_fraction": 0.013000000000000001,
+        "trail_decay": 0.0,
+        "is_learning": true
       },
       "states": {
-        "center_row": null,
-        "center_col": null,
-        "cached_mask": {
+        "w": {
           "_type": "ndarray_ref",
-          "file": "ax_data/729546562f324c6c90230cd7d2b7c13b.npy"
+          "file": "ax_data/ConvSRL_4_w.npy"
         }
       }
     },
     {
-      "id": "RandomProjection2D_1",
+      "id": "ConvSRL_5",
+      "type": "ConvSRL",
+      "name": "ConvSRL",
+      "position": {
+        "x": 712.9934023330962,
+        "y": 110.88444726595822
+      },
+      "fields": {
+        "amount": 100,
+        "step_fraction": 0.013000000000000001,
+        "trail_decay": 0.0,
+        "is_learning": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/ConvSRL_5_w.npy"
+        }
+      }
+    },
+    {
+      "id": "ConvConfig_6",
+      "type": "ConvConfig",
+      "name": "ConvConfig",
+      "position": {
+        "x": 412.8520358221725,
+        "y": 321.6307878305049
+      },
+      "fields": {
+        "kernel_size": 7
+      },
+      "states": {}
+    },
+    {
+      "id": "RandomProjection2D_7",
       "type": "RandomProjection2D",
       "name": "RandomProjection2D",
       "position": {
-        "x": 415.6012448507883,
-        "y": -2.1452471296287285
+        "x": 1440.878309173047,
+        "y": -166.96848919571215
       },
       "fields": {},
       "states": {
-        "stored_ref_a": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/b06586916be84feca9c75b5efe533326.npy"
-        },
-        "stored_ref_b": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/8e0622d393e04ece866499e16e500cd0.npy"
-        },
-        "reference_length": 784
+        "stored_ref_a": null,
+        "stored_ref_b": null,
+        "reference_length": 0
       }
     },
     {
-      "id": "DrawableMask_2",
-      "type": "DrawableMask",
-      "name": "DrawableMask",
-      "position": {
-        "x": -193.81275004545796,
-        "y": 125.99414993125671
-      },
-      "fields": {
-        "width": 28,
-        "height": 28
-      },
-      "states": {
-        "canvas_state": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/77d7e67ec86c4568ba4dbe01a33c23ca.npy"
-        }
-      }
-    },
-    {
-      "id": "PlotScatter_3",
+      "id": "PlotScatter_8",
       "type": "PlotScatter",
       "name": "PlotScatter",
       "position": {
-        "x": 539.9420439498572,
-        "y": 245.40214922486774
+        "x": 1744.923812359447,
+        "y": 40.00877544637609
       },
       "fields": {
         "max_history": 200
@@ -94,23 +152,150 @@
       "states": {
         "history": {
           "_type": "ndarray_ref",
-          "file": "ax_data/506d51fba2d046d8b0beb785ec8e0a6a.npy"
+          "file": "ax_data/PlotScatter_8_history.npy"
         },
-        "history_count": 200
+        "history_count": 0
+      }
+    },
+    {
+      "id": "ConvConfig_10",
+      "type": "ConvConfig",
+      "name": "ConvConfig",
+      "position": {
+        "x": 1003.4641257741541,
+        "y": 346.35718843994914
+      },
+      "fields": {
+        "kernel_size": 1
+      },
+      "states": {}
+    },
+    {
+      "id": "ConvReconstruction_11",
+      "type": "ConvReconstruction",
+      "name": "ConvReconstruction",
+      "position": {
+        "x": 715.9045925915118,
+        "y": 980.246408607973
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "InputSelfPlayingTetris_22",
+      "type": "InputSelfPlayingTetris",
+      "name": "InputSelfPlayingTetris",
+      "position": {
+        "x": -319.2219552288859,
+        "y": 463.8887320521253
+      },
+      "fields": {
+        "mode": "Single Drop",
+        "size": 28,
+        "block_size": 2,
+        "speed": 1
+      },
+      "states": {
+        "frame_hold": 0,
+        "lines_cleared": 0,
+        "games_played": 17,
+        "kind_index": 0,
+        "drop_phase": "fall",
+        "active_name": "S-H",
+        "active_x": 0,
+        "active_y": 6
       }
     }
   ],
   "connections": [
     {
-      "from_node": "RandomProjection2D_1",
+      "from_node": "ConvConfig_1",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvLGN_2",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvConfig_1",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvSRL_4",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvSRL_4",
+      "from_output": "weights",
+      "to_node": "ConvReconstruction_3",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "ConvSRL_4",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvReconstruction_3",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvConfig_6",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvSRL_5",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvSRL_4",
+      "from_output": "activations",
+      "to_node": "ConvSRL_5",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "ConvSRL_5",
+      "from_output": "activations",
+      "to_node": "DisplayVector_0",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "DisplayVector_0",
+      "from_output": "output_data",
+      "to_node": "RandomProjection2D_7",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "RandomProjection2D_7",
       "from_output": "output",
-      "to_node": "PlotScatter_3",
+      "to_node": "PlotScatter_8",
       "to_input": "input_value"
     },
     {
-      "from_node": "DrawableMask_2",
-      "from_output": "output",
-      "to_node": "RandomProjection2D_1",
+      "from_node": "ConvSRL_5",
+      "from_output": "weights",
+      "to_node": "ConvReconstruction_11",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "ConvSRL_5",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvReconstruction_11",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvReconstruction_11",
+      "from_output": "result",
+      "to_node": "ConvReconstruction_3",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "ConvLGN_2",
+      "from_output": "output_data",
+      "to_node": "ConvSRL_4",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "ConvSRL_5",
+      "from_output": "activations",
+      "to_node": "ConvReconstruction_11",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "InputSelfPlayingTetris_22",
+      "from_output": "output_frame",
+      "to_node": "ConvLGN_2",
       "to_input": "input_data"
     }
   ]

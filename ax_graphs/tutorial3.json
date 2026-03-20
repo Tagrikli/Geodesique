@@ -4,10 +4,10 @@
   "name": "tutorial3",
   "viewport": {
     "pan": {
-      "x": 679.4558264265509,
-      "y": 778.7133199443377
+      "x": 354.32958232285023,
+      "y": 494.40828550083114
     },
-    "zoom": 0.9906952583254125
+    "zoom": 1.185917615085004
   },
   "editor": {
     "drawer_collapsed": false,
@@ -23,8 +23,8 @@
       "type": "Reconstruction",
       "name": "Reconstruction",
       "position": {
-        "x": 202.0561719452254,
-        "y": -255.54160551167132
+        "x": 562.0224999789502,
+        "y": 433.3201038478143
       },
       "fields": {},
       "states": {}
@@ -34,8 +34,8 @@
       "type": "LGN",
       "name": "LGN",
       "position": {
-        "x": -132.9278241083989,
-        "y": -49.46272234324351
+        "x": -148.0687061040943,
+        "y": -33.31244821450184
       },
       "fields": {},
       "states": {}
@@ -45,162 +45,48 @@
       "type": "SignedResidualLearning",
       "name": "SignedResidualLearning",
       "position": {
-        "x": 219.3549994448358,
-        "y": 191.21854672396933
+        "x": 222.23120958208665,
+        "y": 194.1019731389428
       },
       "fields": {
         "amount": 25,
         "dim": 784,
-        "step_fraction": 0.011,
-        "gain_strength": 22.150000000000002,
-        "trail_decay": 0.684,
+        "step_fraction": 0.029,
+        "gain_strength": 0.5,
+        "trail_decay": 0.0,
         "is_learning": true
       },
-      "states": {}
-    },
-    {
-      "id": "SignedResidualLearning_11",
-      "type": "SignedResidualLearning",
-      "name": "SignedResidualLearning",
-      "position": {
-        "x": 565.0668950183037,
-        "y": 160.71998714656416
-      },
-      "fields": {
-        "amount": 4,
-        "dim": 25,
-        "step_fraction": 0.004,
-        "gain_strength": 0.0,
-        "trail_decay": 0.833,
-        "is_learning": true
-      },
-      "states": {}
-    },
-    {
-      "id": "DisplayVector_14",
-      "type": "DisplayVector",
-      "name": "DisplayVector",
-      "position": {
-        "x": 937.4418877007756,
-        "y": 13.65098400810696
-      },
-      "fields": {
-        "scale_mode": "auto",
-        "vmin": -1.0,
-        "vmax": 1.0
-      },
-      "states": {}
-    },
-    {
-      "id": "Reconstruction_15",
-      "type": "Reconstruction",
-      "name": "Reconstruction",
-      "position": {
-        "x": 542.6671849321126,
-        "y": -259.8609380352475
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "DisplayVector_16",
-      "type": "DisplayVector",
-      "name": "DisplayVector",
-      "position": {
-        "x": 936.5756567345773,
-        "y": -405.2542891420316
-      },
-      "fields": {
-        "scale_mode": "auto",
-        "vmin": -1.0,
-        "vmax": 1.0
-      },
-      "states": {}
-    },
-    {
-      "id": "RandomProjection2D_19",
-      "type": "RandomProjection2D",
-      "name": "RandomProjection2D",
-      "position": {
-        "x": 1017.8388180415195,
-        "y": 445.6358693652761
-      },
-      "fields": {},
       "states": {
-        "stored_ref_a": {
+        "w": {
           "_type": "ndarray_ref",
-          "file": "ax_data/33148bd1be254fd0971a0e9ad5a92981.npy"
-        },
-        "stored_ref_b": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/1a8d7a644af849ba9c140f37e09d6e29.npy"
-        },
-        "reference_length": 4
+          "file": "ax_data/SignedResidualLearning_2_w.npy"
+        }
       }
     },
     {
-      "id": "PlotScatter_20",
-      "type": "PlotScatter",
-      "name": "PlotScatter",
+      "id": "InputDigitMNIST_3",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
       "position": {
-        "x": 925.3196955905389,
-        "y": 630.1725147914287
+        "x": -141.916061602872,
+        "y": 279.685056301565
       },
       "fields": {
-        "max_history": 800
+        "digit_filter": -1,
+        "repeat": 1
       },
       "states": {
-        "history": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/f8ea474820f34aa8ad4da9c7eae951e2.npy"
-        },
-        "history_count": 800
-      }
-    },
-    {
-      "id": "InputStickFighter_21",
-      "type": "InputStickFighter",
-      "name": "InputStickFighter",
-      "position": {
-        "x": -189.74181411671879,
-        "y": 214.73175224998556
-      },
-      "fields": {
-        "num_poses": 4,
-        "resolution": 28,
-        "speed": 30,
-        "render_mode": "Anti-Aliased",
-        "interp_mode": "Smooth"
-      },
-      "states": {
-        "frame_idx": 112,
-        "pose_indices": [
-          2,
-          5,
-          14,
-          13
-        ],
-        "walk_directions": [
-          1,
-          1,
-          1
-        ],
-        "cache_key": ""
+        "idx": 36472,
+        "repeat_counter": 0
       }
     }
   ],
   "connections": [
     {
-      "from_node": "SignedResidualLearning_2",
-      "from_output": "weights",
+      "from_node": "LGN_1",
+      "from_output": "output_mean",
       "to_node": "Reconstruction_0",
-      "to_input": "weights"
-    },
-    {
-      "from_node": "SignedResidualLearning_2",
-      "from_output": "activations",
-      "to_node": "Reconstruction_0",
-      "to_input": "activations"
+      "to_input": "input_mean"
     },
     {
       "from_node": "LGN_1",
@@ -209,64 +95,22 @@
       "to_input": "inputs"
     },
     {
-      "from_node": "LGN_1",
-      "from_output": "output_mean",
-      "to_node": "Reconstruction_0",
-      "to_input": "input_mean"
-    },
-    {
       "from_node": "SignedResidualLearning_2",
       "from_output": "activations",
-      "to_node": "SignedResidualLearning_11",
-      "to_input": "inputs"
-    },
-    {
-      "from_node": "SignedResidualLearning_11",
-      "from_output": "activations",
-      "to_node": "DisplayVector_14",
-      "to_input": "input_data"
-    },
-    {
-      "from_node": "SignedResidualLearning_11",
-      "from_output": "activations",
-      "to_node": "Reconstruction_15",
+      "to_node": "Reconstruction_0",
       "to_input": "activations"
     },
     {
-      "from_node": "SignedResidualLearning_11",
+      "from_node": "SignedResidualLearning_2",
       "from_output": "weights",
-      "to_node": "Reconstruction_15",
+      "to_node": "Reconstruction_0",
       "to_input": "weights"
     },
     {
-      "from_node": "SignedResidualLearning_2",
-      "from_output": "activations",
-      "to_node": "DisplayVector_16",
-      "to_input": "input_data"
-    },
-    {
-      "from_node": "RandomProjection2D_19",
-      "from_output": "output",
-      "to_node": "PlotScatter_20",
-      "to_input": "input_value"
-    },
-    {
-      "from_node": "SignedResidualLearning_11",
-      "from_output": "activations",
-      "to_node": "RandomProjection2D_19",
-      "to_input": "input_data"
-    },
-    {
-      "from_node": "InputStickFighter_21",
-      "from_output": "output_frame",
+      "from_node": "InputDigitMNIST_3",
+      "from_output": "output_pattern",
       "to_node": "LGN_1",
       "to_input": "input_data"
-    },
-    {
-      "from_node": "Reconstruction_15",
-      "from_output": "result",
-      "to_node": "SignedResidualLearning_2",
-      "to_input": "feedback"
     }
   ]
 }

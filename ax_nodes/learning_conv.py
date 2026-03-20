@@ -211,11 +211,15 @@ class GeodesicIMDVConv(Node):
         s = int(np.sqrt(k))
         assert s * s == k, f"amount must be a perfect square, got {k}"
 
+        if H % P != 0 or W % P != 0:
+            raise ValueError(
+                f"GeodesicIMDVConv input shape {inp.shape} is not divisible by patch size {P}"
+            )
         grid_h = H // P
         grid_w = W // P
 
         # Extract non-overlapping patches: (grid_h * grid_w, P*P)
-        patches = inp[:grid_h * P, :grid_w * P].reshape(grid_h, P, grid_w, P)
+        patches = inp.reshape(grid_h, P, grid_w, P)
         patches = patches.transpose(0, 2, 1, 3).reshape(grid_h * grid_w, P * P)
 
         # Handle feedback
@@ -305,8 +309,14 @@ class ReconstructConv(Node):
         k, dim = w.shape
 
         s = int(np.sqrt(k))
+        if s * s != k:
+            raise ValueError(f"weights row count {k} is not a perfect square")
 
         map_h, map_w = act_map.shape
+        if map_h % s != 0 or map_w % s != 0:
+            raise ValueError(
+                f"activation map shape {act_map.shape} is not divisible by template grid size {s}"
+            )
         grid_h = map_h // s
         grid_w = map_w // s
 
