@@ -1,0 +1,294 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "completion?",
+  "viewport": {
+    "pan": {
+      "x": 951.9367725276059,
+      "y": 432.47198722536353
+    },
+    "zoom": 0.8276098460668415
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": true,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "SignedResidualLearning_0",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 621.5764472888632,
+        "y": 145.7587827555106
+      },
+      "fields": {
+        "amount": 64,
+        "dim": 784,
+        "step_fraction": 0.011,
+        "gain_strength": 0.41000000000000003,
+        "trail_decay": 0.0,
+        "is_learning": false,
+        "gain_sign_positive": false
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/completion?_SignedResidualLearning_0_w.npy"
+        }
+      }
+    },
+    {
+      "id": "Reconstruction_1",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 624.0,
+        "y": -249.0
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "LGN_2",
+      "type": "LGN",
+      "name": "LGN",
+      "position": {
+        "x": 179.0,
+        "y": 21.0
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "InputDigitMNIST_3",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": -169.0,
+        "y": 345.00000000000006
+      },
+      "fields": {
+        "digit_filter": 1.0,
+        "repeat": 10,
+        "blank_steps": 0
+      },
+      "states": {
+        "idx": 44581,
+        "repeat_counter": 9
+      }
+    },
+    {
+      "id": "AttentionMask_4",
+      "type": "AttentionMask",
+      "name": "AttentionMask",
+      "position": {
+        "x": 224.77010350259877,
+        "y": 514.0527183892161
+      },
+      "fields": {
+        "width": 28,
+        "height": 28,
+        "radius": 27.0
+      },
+      "states": {
+        "center_row": 12,
+        "center_col": 14,
+        "cached_mask": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/completion?_AttentionMask_4_cached_mask.npy"
+        }
+      }
+    },
+    {
+      "id": "Multiply_5",
+      "type": "Multiply",
+      "name": "Multiply",
+      "position": {
+        "x": 240.90504921744247,
+        "y": 328.89815610071537
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "DisplayHeatmap_6",
+      "type": "DisplayHeatmap",
+      "name": "DisplayHeatmap",
+      "position": {
+        "x": 2153.1586133501605,
+        "y": 629.2870927050076
+      },
+      "fields": {
+        "colormap": "grayscale",
+        "scale_mode": "auto",
+        "vmin": 0.0,
+        "vmax": 1.0,
+        "use_grid_display": false
+      },
+      "states": {}
+    },
+    {
+      "id": "SignedResidualLearning_7",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 929.4679680384988,
+        "y": 149.07223896669905
+      },
+      "fields": {
+        "amount": 36,
+        "dim": 64,
+        "step_fraction": 0.009000000000000001,
+        "gain_strength": 0.41000000000000003,
+        "trail_decay": 0.0,
+        "is_learning": false,
+        "gain_sign_positive": false
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/completion?_SignedResidualLearning_7_w.npy"
+        }
+      }
+    },
+    {
+      "id": "SignedResidualLearning_8",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 1242.3751035415332,
+        "y": 135.95850590255526
+      },
+      "fields": {
+        "amount": 25,
+        "dim": 36,
+        "step_fraction": 0.007,
+        "gain_strength": 0.42,
+        "trail_decay": 0.0,
+        "is_learning": false,
+        "gain_sign_positive": false
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/completion?_SignedResidualLearning_8_w.npy"
+        }
+      }
+    },
+    {
+      "id": "SignedResidualLearning_9",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 1551.9999999999998,
+        "y": 141.0
+      },
+      "fields": {
+        "amount": 9,
+        "dim": 25,
+        "step_fraction": 0.002,
+        "gain_strength": 0.42,
+        "trail_decay": 0.0,
+        "is_learning": false,
+        "gain_sign_positive": false
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/completion?_SignedResidualLearning_9_w.npy"
+        }
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "LGN_2",
+      "from_output": "output_data",
+      "to_node": "SignedResidualLearning_0",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_0",
+      "from_output": "weights",
+      "to_node": "Reconstruction_1",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "SignedResidualLearning_0",
+      "from_output": "activations",
+      "to_node": "Reconstruction_1",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "LGN_2",
+      "from_output": "output_mean",
+      "to_node": "Reconstruction_1",
+      "to_input": "input_mean"
+    },
+    {
+      "from_node": "InputDigitMNIST_3",
+      "from_output": "output_pattern",
+      "to_node": "Multiply_5",
+      "to_input": "input_a"
+    },
+    {
+      "from_node": "AttentionMask_4",
+      "from_output": "output",
+      "to_node": "Multiply_5",
+      "to_input": "input_b"
+    },
+    {
+      "from_node": "Multiply_5",
+      "from_output": "output",
+      "to_node": "DisplayHeatmap_6",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SignedResidualLearning_0",
+      "from_output": "activations",
+      "to_node": "SignedResidualLearning_7",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_7",
+      "from_output": "activations",
+      "to_node": "SignedResidualLearning_8",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "Multiply_5",
+      "from_output": "output",
+      "to_node": "LGN_2",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SignedResidualLearning_8",
+      "from_output": "activations",
+      "to_node": "SignedResidualLearning_9",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_9",
+      "from_output": "feedback_out",
+      "to_node": "SignedResidualLearning_8",
+      "to_input": "feedback"
+    },
+    {
+      "from_node": "SignedResidualLearning_8",
+      "from_output": "feedback_out",
+      "to_node": "SignedResidualLearning_7",
+      "to_input": "feedback"
+    },
+    {
+      "from_node": "SignedResidualLearning_7",
+      "from_output": "feedback_out",
+      "to_node": "SignedResidualLearning_0",
+      "to_input": "feedback"
+    }
+  ]
+}

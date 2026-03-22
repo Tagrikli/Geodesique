@@ -60,7 +60,6 @@ class SignedResidualLearning(Node):
     feedback = InputPort("Feedback", np.ndarray)
 
     amount = Integer("Amount", default=25)
-    dim = Integer("Dim", default=784)
     step_fraction = Range(
         "Step (η)", default=0.05, min_val=0.0, max_val=0.5, step=0.001
     )
@@ -77,6 +76,7 @@ class SignedResidualLearning(Node):
     raw_activations = OutputPort("Raw Act", np.ndarray)
     activations = OutputPort("Inh Act", np.ndarray)
     feedback_out = OutputPort("Feedback", np.ndarray)
+    input_shape_out = OutputPort("Input Shape", np.ndarray)
 
     w = State("Weights")
 
@@ -88,33 +88,50 @@ class SignedResidualLearning(Node):
     reset = Action("Reset", lambda self, params=None: self._on_reset(params))
 
     def init(self):
-        self._on_reset()
+        self._input_shape = None
+        self._dim = None
+        self.w = None
+        self._ema_buffer = None
 
     def _on_reset(self, _params=None):
-        w = np.random.randn(int(self.amount), int(self.dim))
-        self.w = w / (np.linalg.norm(w, axis=1, keepdims=True) + 1e-8)
+        if self._dim is not None:
+            self._init_weights(self._dim)
         self._ema_buffer = None
-        self.weights_preview = to_display_grid(self.w)
         return {"status": "ok"}
+
+    def _init_weights(self, dim):
+        self._dim = dim
+        w = np.random.randn(int(self.amount), dim)
+        self.w = w / (np.linalg.norm(w, axis=1, keepdims=True) + 1e-8)
+        self.weights_preview = to_display_grid(self.w, patch_shape=self._input_shape)
 
     def process(self):
         eps = 1e-8
 
         if self.inputs is None:
-            self.weights = self.w
+            if self.w is not None:
+                self.weights = self.w
             return
 
+        raw_input = np.asarray(self.inputs, dtype=np.float64)
+        if raw_input.ndim == 2:
+            self._input_shape = raw_input.shape
+        x = raw_input.ravel()
+
+        # Lazy-init weights from input dimensionality
+        if self.w is None or self._dim != x.size:
+            self._init_weights(x.size)
+
         w = np.asarray(self.w, dtype=np.float64)
-        x = np.asarray(self.inputs, dtype=np.float64).ravel()
 
         # Feedback gain modulation (pre-EMA)
         if self.feedback is not None:
             fb = np.asarray(self.feedback, dtype=np.float64).ravel()
             g_raw = fb @ w                          # project to pixel space
-            #sign = 1 if self.gain_sign_positive else -1
-            #gain = 1.0 + (self.gain_strength * g_raw) * sign
-            x = g_raw * x
-            self.gain_input_preview = to_display_grid(x)
+            sign = 1 if self.gain_sign_positive else -1
+            gain = np.clip(1.0 + (self.gain_strength * g_raw) * sign, 0.0, 2.0)
+            x = gain * x
+            self.gain_input_preview = to_display_grid(x, patch_shape=self._input_shape)
 
         # EMA temporal integration (runs regardless of is_learning)
         gamma = float(self.trail_decay)
@@ -123,7 +140,7 @@ class SignedResidualLearning(Node):
         else:
             self._ema_buffer = (1.0 - gamma) * x + gamma * self._ema_buffer
         x = self._ema_buffer
-        self.ema_input_preview = to_display_grid(x)
+        self.ema_input_preview = to_display_grid(x, patch_shape=self._input_shape)
 
         # Renormalize templates
         w = w / (np.linalg.norm(w, axis=1, keepdims=True) + eps)
@@ -182,9 +199,10 @@ class SignedResidualLearning(Node):
         self.raw_activations = s * x_norm
         self.activations = a_inh * x_norm
         self.feedback_out = (a_inh * x_norm) @ w
+        self.input_shape_out = np.array(self._input_shape) if self._input_shape is not None else None
 
-        self.weights_preview = to_display_grid(self.w)
-        self.raw_activations_preview = to_display_grid(s * x_norm)
+        self.weights_preview = to_display_grid(self.w, patch_shape=self._input_shape)
+        self.raw_activations_preview = to_display_grid(s * x_norm, patch_shape=self._input_shape)
 
 
 @branch("Hypercolumn/Conv")

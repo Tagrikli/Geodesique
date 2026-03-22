@@ -12,6 +12,7 @@ class Reconstruction(Node):
     weights = InputPort("Weights", np.ndarray)
     activations = InputPort("Activations", np.ndarray)
     input_mean = InputPort("Input Mean", float)
+    input_shape = InputPort("Input Shape", np.ndarray)
 
     result = OutputPort("Result", np.ndarray)
 
@@ -32,8 +33,10 @@ class Reconstruction(Node):
         if self.input_mean is not None:
             result = result + self.input_mean
 
-        self.result = result
-        self.result_heatmap = to_display_grid(result)
+        patch_shape = tuple(self.input_shape.astype(int)) if self.input_shape is not None else None
+        display = to_display_grid(result, patch_shape=patch_shape)
+        self.result = display
+        self.result_heatmap = display
 
 
 @branch("Hypercolumn/Conv")

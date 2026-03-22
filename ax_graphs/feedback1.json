@@ -4,8 +4,8 @@
   "name": "feedback1",
   "viewport": {
     "pan": {
-      "x": 894.8241078126807,
-      "y": 483.1436131278913
+      "x": 1035.643333259492,
+      "y": 360.0321944737929
     },
     "zoom": 1.1859176150850046
   },
@@ -35,7 +35,7 @@
       "name": "SignedResidualLearning",
       "position": {
         "x": 556.0193362512396,
-        "y": 10.728912328106588
+        "y": 9.04245453832442
       },
       "fields": {
         "amount": 36,
@@ -126,21 +126,6 @@
       }
     },
     {
-      "id": "DisplayVector_7",
-      "type": "DisplayVector",
-      "name": "DisplayVector",
-      "position": {
-        "x": 1323.7411591545185,
-        "y": 208.51336483939963
-      },
-      "fields": {
-        "scale_mode": "auto",
-        "vmin": -1.0,
-        "vmax": 1.0
-      },
-      "states": {}
-    },
-    {
       "id": "Reconstruction_10",
       "type": "Reconstruction",
       "name": "Reconstruction",
@@ -176,9 +161,24 @@
         "blank_steps": 3
       },
       "states": {
-        "idx": 34576,
-        "repeat_counter": 7
+        "idx": 35194,
+        "repeat_counter": 0
       }
+    },
+    {
+      "id": "DisplayVector_15",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 1383.8968668495104,
+        "y": 26.113552096923286
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
     }
   ],
   "connections": [
@@ -187,12 +187,6 @@
       "from_output": "activations",
       "to_node": "SignedResidualLearning_3",
       "to_input": "inputs"
-    },
-    {
-      "from_node": "SignedResidualLearning_3",
-      "from_output": "activations",
-      "to_node": "DisplayVector_7",
-      "to_input": "input_data"
     },
     {
       "from_node": "SignedResidualLearning_3",
@@ -229,6 +223,18 @@
       "from_output": "output_data",
       "to_node": "SignedResidualLearning_1",
       "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_3",
+      "from_output": "raw_activations",
+      "to_node": "DisplayVector_15",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SignedResidualLearning_3",
+      "from_output": "feedback_out",
+      "to_node": "SignedResidualLearning_1",
+      "to_input": "feedback"
     }
   ]
 }

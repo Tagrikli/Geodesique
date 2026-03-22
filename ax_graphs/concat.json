@@ -1,0 +1,310 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "concat",
+  "viewport": {
+    "pan": {
+      "x": 461.5355088293677,
+      "y": 432.21318535040876
+    },
+    "zoom": 1.1859176150850046
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 260,
+    "console_collapsed": false,
+    "console_height": 216,
+    "max_hz_enabled": false,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "Reconstruction_0",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 672.223404502831,
+        "y": 151.283801948121
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "SignedResidualLearning_1",
+      "type": "SignedResidualLearning",
+      "name": "SignedResidualLearning",
+      "position": {
+        "x": 322.0,
+        "y": 29.493851396445244
+      },
+      "fields": {
+        "amount": 100,
+        "step_fraction": 0.101,
+        "gain_strength": 0.5,
+        "trail_decay": 0.0,
+        "is_learning": true,
+        "gain_sign_positive": false
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/concat_SignedResidualLearning_1_w.npy"
+        }
+      }
+    },
+    {
+      "id": "LGN_3",
+      "type": "LGN",
+      "name": "LGN",
+      "position": {
+        "x": -179.7532851352654,
+        "y": 110.82811448907745
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "MatrixConcat_4",
+      "type": "MatrixConcat",
+      "name": "MatrixConcat",
+      "position": {
+        "x": -9.395728102169528,
+        "y": 263.92369652028674
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "SparseIndexHashEncode_5",
+      "type": "SparseIndexHashEncode",
+      "name": "SparseIndexHashEncode",
+      "position": {
+        "x": -876.9495328991123,
+        "y": 943.5041677415181
+      },
+      "fields": {
+        "sparsity": 95.0,
+        "vector_size": 28,
+        "max_value": 10
+      },
+      "states": {}
+    },
+    {
+      "id": "MatrixReshape_6",
+      "type": "MatrixReshape",
+      "name": "MatrixReshape",
+      "position": {
+        "x": -337.50550238208916,
+        "y": 672.0773538635783
+      },
+      "fields": {
+        "rows": -1,
+        "cols": 28
+      },
+      "states": {}
+    },
+    {
+      "id": "LGN_7",
+      "type": "LGN",
+      "name": "LGN",
+      "position": {
+        "x": -323.43739074272924,
+        "y": 470.4937075132764
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "MatrixZeros_8",
+      "type": "MatrixZeros",
+      "name": "MatrixZeros",
+      "position": {
+        "x": -37.123557124759486,
+        "y": 643.2839761098018
+      },
+      "fields": {
+        "rows": 1,
+        "cols": 28
+      },
+      "states": {}
+    },
+    {
+      "id": "MatrixCrop_10",
+      "type": "MatrixCrop",
+      "name": "MatrixCrop",
+      "position": {
+        "x": 661.6641189762629,
+        "y": 560.9883130146532
+      },
+      "fields": {
+        "x_start": 0,
+        "y_start": 28,
+        "x_end": 28,
+        "y_end": 29
+      },
+      "states": {}
+    },
+    {
+      "id": "CosineTracker_18",
+      "type": "CosineTracker",
+      "name": "CosineTracker",
+      "position": {
+        "x": -366.8912503785971,
+        "y": 868.7155970805145
+      },
+      "fields": {
+        "history_size": 500
+      },
+      "states": {}
+    },
+    {
+      "id": "AttentionMask_20",
+      "type": "AttentionMask",
+      "name": "AttentionMask",
+      "position": {
+        "x": -641.0555135894922,
+        "y": 248.01084425404179
+      },
+      "fields": {
+        "width": 28,
+        "height": 28,
+        "radius": 26.0
+      },
+      "states": {
+        "center_row": 12,
+        "center_col": 15,
+        "cached_mask": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/concat_AttentionMask_20_cached_mask.npy"
+        }
+      }
+    },
+    {
+      "id": "Multiply_21",
+      "type": "Multiply",
+      "name": "Multiply",
+      "position": {
+        "x": -612.792533864194,
+        "y": -49.75983499463389
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "InputFashionMNIST_22",
+      "type": "InputFashionMNIST",
+      "name": "InputFashionMNIST",
+      "position": {
+        "x": -1107.4694471173482,
+        "y": 334.0172453850903
+      },
+      "fields": {
+        "category_filter": -1,
+        "repeat": 1,
+        "blank_steps": 0
+      },
+      "states": {
+        "idx": 3677,
+        "repeat_counter": 0
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "LGN_3",
+      "from_output": "output_data",
+      "to_node": "MatrixConcat_4",
+      "to_input": "input_a"
+    },
+    {
+      "from_node": "SparseIndexHashEncode_5",
+      "from_output": "o_output",
+      "to_node": "MatrixReshape_6",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "MatrixConcat_4",
+      "from_output": "output_result",
+      "to_node": "SignedResidualLearning_1",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "weights",
+      "to_node": "Reconstruction_0",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "activations",
+      "to_node": "Reconstruction_0",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "LGN_3",
+      "from_output": "output_mean",
+      "to_node": "Reconstruction_0",
+      "to_input": "input_mean"
+    },
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "input_shape_out",
+      "to_node": "Reconstruction_0",
+      "to_input": "input_shape"
+    },
+    {
+      "from_node": "Reconstruction_0",
+      "from_output": "result",
+      "to_node": "MatrixCrop_10",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SparseIndexHashEncode_5",
+      "from_output": "o_output",
+      "to_node": "CosineTracker_18",
+      "to_input": "i_vector_a"
+    },
+    {
+      "from_node": "MatrixCrop_10",
+      "from_output": "output",
+      "to_node": "CosineTracker_18",
+      "to_input": "i_vector_b"
+    },
+    {
+      "from_node": "AttentionMask_20",
+      "from_output": "output",
+      "to_node": "Multiply_21",
+      "to_input": "input_b"
+    },
+    {
+      "from_node": "Multiply_21",
+      "from_output": "output",
+      "to_node": "LGN_3",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "MatrixReshape_6",
+      "from_output": "output",
+      "to_node": "LGN_7",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "InputFashionMNIST_22",
+      "from_output": "output_pattern",
+      "to_node": "Multiply_21",
+      "to_input": "input_a"
+    },
+    {
+      "from_node": "InputFashionMNIST_22",
+      "from_output": "output_category",
+      "to_node": "SparseIndexHashEncode_5",
+      "to_input": "i_value"
+    },
+    {
+      "from_node": "LGN_7",
+      "from_output": "output_data",
+      "to_node": "MatrixConcat_4",
+      "to_input": "input_b"
+    }
+  ]
+}

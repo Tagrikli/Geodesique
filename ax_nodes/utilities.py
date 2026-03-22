@@ -1,53 +1,60 @@
 import numpy as np
 
-def to_display_grid(arr):
-    """Convert 1D or 2D array to a square-ish 2D array for display.
+def to_display_grid(arr, patch_shape=None):
+    """Convert 1D or 2D array to a tiled 2D mosaic for display.
 
-    For 1D arrays: reshape into a near-square 2D array.
-    For 2D arrays (weights matrix): create a mosaic of weight patches.
+    Args:
+        arr: 1D vector or 2D matrix (M rows of D-length vectors).
+        patch_shape: (H, W) tuple describing how each D-length vector should
+                     be reshaped for display.  If None, assumes sqrt(D) square.
+
+    For 1D arrays: reshape using patch_shape or nearest square.
+    For 2D arrays (e.g. weight matrix): tile each row as an (H, W) patch.
     """
     import numpy as np
 
     if arr.ndim == 1:
         n = len(arr)
-        # Find dimensions for a near-square rectangle
+        if patch_shape is not None:
+            H, W = patch_shape
+            padded = np.zeros(H * W, dtype=arr.dtype)
+            padded[:n] = arr
+            return padded.reshape(H, W)
         h = int(np.ceil(np.sqrt(n)))
         w = int(np.ceil(n / h))
-        # Pad with zeros if needed
         padded = np.zeros(h * w, dtype=arr.dtype)
         padded[:n] = arr
         return padded.reshape(h, w)
     elif arr.ndim == 2:
         M, D = arr.shape
-        # Check if D is a perfect square (for weight patches)
-        sqrt_D = int(np.sqrt(D))
-        if sqrt_D * sqrt_D == D:
-            # This is a weight matrix with square patches
-            H = sqrt_D
-            W = sqrt_D
-            S = int(np.ceil(np.sqrt(M)))
-            total = S * S
-            pad = total - M
 
-            weights = arr
-            if pad > 0:
-                weights = np.vstack([weights, np.zeros((pad, D), dtype=weights.dtype)])
-
-            mosaic = (
-                weights.reshape(S, S, H, W).transpose(0, 2, 1, 3).reshape(S * H, S * W)
-            )
-            return mosaic
+        if patch_shape is not None:
+            H, W = patch_shape
         else:
-            # Not a square patch matrix, just reshape to near-square
-            n = M * D
-            h = int(np.ceil(np.sqrt(n)))
-            w = int(np.ceil(n / h))
-            flattened = arr.flatten()
-            padded = np.zeros(h * w, dtype=arr.dtype)
-            padded[:n] = flattened
-            return padded.reshape(h, w)
+            sqrt_D = int(np.sqrt(D))
+            if sqrt_D * sqrt_D == D:
+                H, W = sqrt_D, sqrt_D
+            else:
+                W = int(np.sqrt(D))
+                while W > 0 and D % W != 0:
+                    W -= 1
+                if W == 0:
+                    W = 1
+                H = D // W
+
+        S = int(np.ceil(np.sqrt(M)))
+        total = S * S
+        pad = total - M
+
+        weights = arr
+        if pad > 0:
+            weights = np.vstack([weights, np.zeros((pad, D), dtype=weights.dtype)])
+
+        mosaic = (
+            weights.reshape(S, S, H, W).transpose(0, 2, 1, 3).reshape(S * H, S * W)
+        )
+        return mosaic
     else:
-        # Return as-is for other dimensions
         return arr
 
 def scale_to_bwr(arr):
