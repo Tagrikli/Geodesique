@@ -4,15 +4,15 @@
   "name": "concat",
   "viewport": {
     "pan": {
-      "x": 461.5355088293677,
-      "y": 432.21318535040876
+      "x": 924.1760829909942,
+      "y": 867.4048848438283
     },
-    "zoom": 1.1859176150850046
+    "zoom": 1.1859176150850048
   },
   "editor": {
     "drawer_collapsed": false,
     "drawer_width": 260,
-    "console_collapsed": false,
+    "console_collapsed": true,
     "console_height": 216,
     "max_hz_enabled": false,
     "max_hz_value": 60
@@ -23,8 +23,8 @@
       "type": "Reconstruction",
       "name": "Reconstruction",
       "position": {
-        "x": 672.223404502831,
-        "y": 151.283801948121
+        "x": 617.1012271821653,
+        "y": 177.92718548887436
       },
       "fields": {},
       "states": {}
@@ -34,15 +34,16 @@
       "type": "SignedResidualLearning",
       "name": "SignedResidualLearning",
       "position": {
-        "x": 322.0,
-        "y": 29.493851396445244
+        "x": 308.0874050900869,
+        "y": 24.239597761630364
       },
       "fields": {
-        "amount": 100,
-        "step_fraction": 0.101,
+        "amount": 500,
+        "step_fraction": 0.07200000000000001,
         "gain_strength": 0.5,
+        "input_pull": 0.1,
         "trail_decay": 0.0,
-        "is_learning": true,
+        "is_learning": false,
         "gain_sign_positive": false
       },
       "states": {
@@ -53,44 +54,22 @@
       }
     },
     {
-      "id": "LGN_3",
-      "type": "LGN",
-      "name": "LGN",
-      "position": {
-        "x": -179.7532851352654,
-        "y": 110.82811448907745
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "MatrixConcat_4",
-      "type": "MatrixConcat",
-      "name": "MatrixConcat",
-      "position": {
-        "x": -9.395728102169528,
-        "y": 263.92369652028674
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "SparseIndexHashEncode_5",
+      "id": "SparseIndexHashEncode_2",
       "type": "SparseIndexHashEncode",
       "name": "SparseIndexHashEncode",
       "position": {
-        "x": -876.9495328991123,
-        "y": 943.5041677415181
+        "x": 631.8418677024022,
+        "y": 595.294299992179
       },
       "fields": {
-        "sparsity": 95.0,
+        "sparsity": 73.0,
         "vector_size": 28,
         "max_value": 10
       },
       "states": {}
     },
     {
-      "id": "MatrixReshape_6",
+      "id": "MatrixReshape_3",
       "type": "MatrixReshape",
       "name": "MatrixReshape",
       "position": {
@@ -104,23 +83,12 @@
       "states": {}
     },
     {
-      "id": "LGN_7",
-      "type": "LGN",
-      "name": "LGN",
-      "position": {
-        "x": -323.43739074272924,
-        "y": 470.4937075132764
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "MatrixZeros_8",
+      "id": "MatrixZeros_4",
       "type": "MatrixZeros",
       "name": "MatrixZeros",
       "position": {
-        "x": -37.123557124759486,
-        "y": 643.2839761098018
+        "x": -337.9224127725738,
+        "y": 366.71053165509994
       },
       "fields": {
         "rows": 1,
@@ -129,12 +97,12 @@
       "states": {}
     },
     {
-      "id": "MatrixCrop_10",
+      "id": "MatrixCrop_5",
       "type": "MatrixCrop",
       "name": "MatrixCrop",
       "position": {
-        "x": 661.6641189762629,
-        "y": 560.9883130146532
+        "x": 929.5007116934148,
+        "y": 315.41223737008
       },
       "fields": {
         "x_start": 0,
@@ -145,12 +113,12 @@
       "states": {}
     },
     {
-      "id": "CosineTracker_18",
+      "id": "CosineTracker_6",
       "type": "CosineTracker",
       "name": "CosineTracker",
       "position": {
-        "x": -366.8912503785971,
-        "y": 868.7155970805145
+        "x": 1093.7620041651035,
+        "y": 712.9954338979426
       },
       "fields": {
         "history_size": 500
@@ -158,12 +126,12 @@
       "states": {}
     },
     {
-      "id": "AttentionMask_20",
+      "id": "AttentionMask_7",
       "type": "AttentionMask",
       "name": "AttentionMask",
       "position": {
-        "x": -641.0555135894922,
-        "y": 248.01084425404179
+        "x": -634.2125182765321,
+        "y": 202.67685923380202
       },
       "fields": {
         "width": 28,
@@ -175,12 +143,12 @@
         "center_col": 15,
         "cached_mask": {
           "_type": "ndarray_ref",
-          "file": "ax_data/concat_AttentionMask_20_cached_mask.npy"
+          "file": "ax_data/concat_AttentionMask_7_cached_mask.npy"
         }
       }
     },
     {
-      "id": "Multiply_21",
+      "id": "Multiply_8",
       "type": "Multiply",
       "name": "Multiply",
       "position": {
@@ -191,60 +159,84 @@
       "states": {}
     },
     {
-      "id": "InputFashionMNIST_22",
-      "type": "InputFashionMNIST",
-      "name": "InputFashionMNIST",
+      "id": "ChannelConcat_9",
+      "type": "ChannelConcat",
+      "name": "ChannelConcat",
       "position": {
-        "x": -1107.4694471173482,
-        "y": 334.0172453850903
+        "x": -29.446358396030462,
+        "y": 162.2296837889093
       },
       "fields": {
-        "category_filter": -1,
+        "w0": 1.0,
+        "w1": 1.0,
+        "w2": 1.0,
+        "w3": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "InputDigitMNIST_10",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": -972.9183892650242,
+        "y": 225.20274000601427
+      },
+      "fields": {
+        "digit_filter": -1.0,
         "repeat": 1,
         "blank_steps": 0
       },
       "states": {
-        "idx": 3677,
+        "idx": 46261,
         "repeat_counter": 0
       }
+    },
+    {
+      "id": "DisplayVector_12",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 633.6293197210981,
+        "y": 986.89101324423
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "DisplayHeatmap_13",
+      "type": "DisplayHeatmap",
+      "name": "DisplayHeatmap",
+      "position": {
+        "x": 927.4557913550645,
+        "y": -175.16466172014324
+      },
+      "fields": {
+        "colormap": "bwr",
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0,
+        "use_grid_display": false
+      },
+      "states": {}
     }
   ],
   "connections": [
     {
-      "from_node": "LGN_3",
-      "from_output": "output_data",
-      "to_node": "MatrixConcat_4",
-      "to_input": "input_a"
-    },
-    {
-      "from_node": "SparseIndexHashEncode_5",
+      "from_node": "SparseIndexHashEncode_2",
       "from_output": "o_output",
-      "to_node": "MatrixReshape_6",
+      "to_node": "MatrixReshape_3",
       "to_input": "input_data"
-    },
-    {
-      "from_node": "MatrixConcat_4",
-      "from_output": "output_result",
-      "to_node": "SignedResidualLearning_1",
-      "to_input": "inputs"
     },
     {
       "from_node": "SignedResidualLearning_1",
       "from_output": "weights",
       "to_node": "Reconstruction_0",
       "to_input": "weights"
-    },
-    {
-      "from_node": "SignedResidualLearning_1",
-      "from_output": "activations",
-      "to_node": "Reconstruction_0",
-      "to_input": "activations"
-    },
-    {
-      "from_node": "LGN_3",
-      "from_output": "output_mean",
-      "to_node": "Reconstruction_0",
-      "to_input": "input_mean"
     },
     {
       "from_node": "SignedResidualLearning_1",
@@ -255,56 +247,74 @@
     {
       "from_node": "Reconstruction_0",
       "from_output": "result",
-      "to_node": "MatrixCrop_10",
+      "to_node": "MatrixCrop_5",
       "to_input": "input_data"
     },
     {
-      "from_node": "SparseIndexHashEncode_5",
+      "from_node": "SparseIndexHashEncode_2",
       "from_output": "o_output",
-      "to_node": "CosineTracker_18",
+      "to_node": "CosineTracker_6",
       "to_input": "i_vector_a"
     },
     {
-      "from_node": "MatrixCrop_10",
+      "from_node": "AttentionMask_7",
       "from_output": "output",
-      "to_node": "CosineTracker_18",
-      "to_input": "i_vector_b"
-    },
-    {
-      "from_node": "AttentionMask_20",
-      "from_output": "output",
-      "to_node": "Multiply_21",
+      "to_node": "Multiply_8",
       "to_input": "input_b"
     },
     {
-      "from_node": "Multiply_21",
+      "from_node": "Multiply_8",
       "from_output": "output",
-      "to_node": "LGN_3",
-      "to_input": "input_data"
+      "to_node": "ChannelConcat_9",
+      "to_input": "ch0"
     },
     {
-      "from_node": "MatrixReshape_6",
-      "from_output": "output",
-      "to_node": "LGN_7",
-      "to_input": "input_data"
-    },
-    {
-      "from_node": "InputFashionMNIST_22",
+      "from_node": "InputDigitMNIST_10",
       "from_output": "output_pattern",
-      "to_node": "Multiply_21",
+      "to_node": "Multiply_8",
       "to_input": "input_a"
     },
     {
-      "from_node": "InputFashionMNIST_22",
-      "from_output": "output_category",
-      "to_node": "SparseIndexHashEncode_5",
+      "from_node": "InputDigitMNIST_10",
+      "from_output": "output_digit",
+      "to_node": "SparseIndexHashEncode_2",
       "to_input": "i_value"
     },
     {
-      "from_node": "LGN_7",
-      "from_output": "output_data",
-      "to_node": "MatrixConcat_4",
-      "to_input": "input_b"
+      "from_node": "ChannelConcat_9",
+      "from_output": "output",
+      "to_node": "SignedResidualLearning_1",
+      "to_input": "inputs"
+    },
+    {
+      "from_node": "MatrixCrop_5",
+      "from_output": "output",
+      "to_node": "CosineTracker_6",
+      "to_input": "i_vector_b"
+    },
+    {
+      "from_node": "MatrixCrop_5",
+      "from_output": "output",
+      "to_node": "DisplayVector_12",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "Reconstruction_0",
+      "from_output": "result",
+      "to_node": "DisplayHeatmap_13",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "SignedResidualLearning_1",
+      "from_output": "raw_activations",
+      "to_node": "Reconstruction_0",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "MatrixZeros_4",
+      "from_output": "output",
+      "to_node": "ChannelConcat_9",
+      "to_input": "ch1"
     }
   ]
 }

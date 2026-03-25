@@ -131,4 +131,4 @@ class ConvReconstruction(Node):
             )
 
         self.result = result
-        self.result_heatmap = to_display_grid(result if result.ndim == 2 else result.mean(axis=2))
+        self.result_heatmap = result if result.ndim == 2 else result.mean(axis=2)

@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1320" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <marker id="arrow-learn" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#6a5acd"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8f9fc"/>
+      <stop offset="100%" stop-color="#eef0f6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="1320" rx="12" fill="url(#bg)" stroke="#ccc" stroke-width="1"/>
+  <text x="360" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#222">CSHL — process()</text>
+  <text x="360" y="56" text-anchor="middle" font-size="12" fill="#777">Contrast-Structure Hypothesis Learning on the Unit Hypersphere</text>
+
+  <!-- ═══ STEP 0: Input guard ═══ -->
+  <rect x="220" y="75" width="280" height="40" rx="20" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5"/>
+  <text x="360" y="100" text-anchor="middle" font-weight="600" fill="#e65100">inputs is None?</text>
+  <!-- yes branch -->
+  <line x1="500" y1="95" x2="590" y2="95" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="598" y="78" width="100" height="34" rx="6" fill="#ffccbc" stroke="#e65100" stroke-width="1"/>
+  <text x="648" y="100" text-anchor="middle" font-size="11" fill="#bf360c">return early</text>
+  <text x="540" y="88" text-anchor="middle" font-size="10" fill="#888">yes</text>
+  <!-- no branch -->
+  <text x="356" y="130" text-anchor="middle" font-size="10" fill="#888">no</text>
+  <line x1="360" y1="115" x2="360" y2="145" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ Flatten ═══ -->
+  <rect x="210" y="148" width="300" height="36" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.2"/>
+  <text x="360" y="171" text-anchor="middle" fill="#0d47a1">Flatten input → x = raw_input.ravel()</text>
+  <line x1="360" y1="184" x2="360" y2="210" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ Lazy init ═══ -->
+  <rect x="200" y="213" width="320" height="36" rx="20" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5"/>
+  <text x="360" y="236" text-anchor="middle" fill="#e65100">w is None or dim changed? → _init_weights</text>
+  <line x1="360" y1="249" x2="360" y2="278" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 1: L2 normalize ═══ -->
+  <rect x="30" y="280" width="20" height="36" rx="4" fill="#1976d2"/>
+  <text x="40" y="303" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">1</text>
+  <rect x="55" y="280" width="320" height="36" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.2"/>
+  <text x="215" y="296" text-anchor="middle" font-weight="600" fill="#0d47a1">L2-normalize input</text>
+  <text x="215" y="310" text-anchor="middle" font-size="11" fill="#1565c0">x̂ = x / ‖x‖   (skip if ‖x‖ ≈ 0)</text>
+  <line x1="360" y1="316" x2="360" y2="345" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 2: Residual ═══ -->
+  <rect x="30" y="348" width="20" height="36" rx="4" fill="#1976d2"/>
+  <text x="40" y="371" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">2</text>
+  <rect x="55" y="348" width="400" height="36" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.2"/>
+  <text x="255" y="364" text-anchor="middle" font-weight="600" fill="#0d47a1">Subtract previous reconstruction</text>
+  <text x="255" y="378" text-anchor="middle" font-size="11" fill="#1565c0">residual = x̂ − prev_reconstruction</text>
+  <line x1="360" y1="384" x2="360" y2="413" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 3: Raw activations ═══ -->
+  <rect x="30" y="416" width="20" height="36" rx="4" fill="#1976d2"/>
+  <text x="40" y="439" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">3</text>
+  <rect x="55" y="416" width="370" height="36" rx="6" fill="#e3f2fd" stroke="#1976d2" stroke-width="1.2"/>
+  <text x="240" y="432" text-anchor="middle" font-weight="600" fill="#0d47a1">Raw activations (ReLU)</text>
+  <text x="240" y="446" text-anchor="middle" font-size="11" fill="#1565c0">a_raw = max(W · residual, 0)</text>
+  <line x1="360" y1="452" x2="360" y2="481" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 4: LOO inhibition ═══ -->
+  <rect x="30" y="484" width="20" height="50" rx="4" fill="#1976d2"/>
+  <text x="40" y="514" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">4</text>
+  <rect x="55" y="484" width="420" height="50" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.2"/>
+  <text x="265" y="502" text-anchor="middle" font-weight="600" fill="#1a237e">LOO scalar inhibition</text>
+  <text x="265" y="516" text-anchor="middle" font-size="11" fill="#283593">loo_i = (Σ a_raw − a_raw_i) / k</text>
+  <text x="265" y="530" text-anchor="middle" font-size="10" fill="#5c6bc0">Leave-one-out: each unit inhibited by all others</text>
+  <line x1="360" y1="534" x2="360" y2="563" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 5: Inhibited activations ═══ -->
+  <rect x="30" y="566" width="20" height="36" rx="4" fill="#1976d2"/>
+  <text x="40" y="589" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">5</text>
+  <rect x="55" y="566" width="430" height="36" rx="6" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1.2"/>
+  <text x="270" y="582" text-anchor="middle" font-weight="600" fill="#1a237e">Inhibited activations</text>
+  <text x="270" y="596" text-anchor="middle" font-size="11" fill="#283593">a_inh = max(a_raw − loo · inhibition_strength, 0)</text>
+  <line x1="360" y1="602" x2="360" y2="631" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 6: Reconstruction ═══ -->
+  <rect x="30" y="634" width="20" height="50" rx="4" fill="#2e7d32"/>
+  <text x="40" y="664" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">6</text>
+  <rect x="55" y="634" width="420" height="50" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="265" y="652" text-anchor="middle" font-weight="600" fill="#1b5e20">Reconstruction (stored for next tick)</text>
+  <text x="265" y="666" text-anchor="middle" font-size="11" fill="#2e7d32">prev_reconstruction = (a_inh · W) · settling_rate</text>
+  <text x="265" y="680" text-anchor="middle" font-size="10" fill="#558b2f">↻ Fed back into Step 2 on next tick</text>
+  <line x1="360" y1="684" x2="360" y2="713" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 7: Learning gate ═══ -->
+  <rect x="220" y="716" width="280" height="40" rx="20" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="1.5"/>
+  <text x="360" y="741" text-anchor="middle" font-weight="600" fill="#4a148c">is_learning?</text>
+  <!-- no branch -->
+  <line x1="500" y1="736" x2="560" y2="736" stroke="#555" stroke-width="1.2"/>
+  <line x1="560" y1="736" x2="560" y2="1180" stroke="#555" stroke-width="1.2"/>
+  <line x1="560" y1="1180" x2="400" y2="1180" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="530" y="728" text-anchor="middle" font-size="10" fill="#888">no</text>
+  <!-- yes branch -->
+  <text x="356" y="772" text-anchor="middle" font-size="10" fill="#888">yes</text>
+  <line x1="360" y1="756" x2="360" y2="788" stroke="#6a5acd" stroke-width="1.2" marker-end="url(#arrow-learn)"/>
+
+  <!-- Learning box background -->
+  <rect x="40" y="790" width="510" height="370" rx="10" fill="#faf5ff" stroke="#9c27b0" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="295" y="810" text-anchor="middle" font-size="14" font-weight="bold" fill="#6a1b9a">Step 7 — Learning (Geodesic rotation)</text>
+
+  <!-- 7a -->
+  <rect x="60" y="822" width="470" height="34" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+  <text x="295" y="838" text-anchor="middle" font-size="11" fill="#4a148c"><tspan font-weight="600">7a</tspan>  recon = a_inh · W   →   full reconstruction</text>
+  <text x="295" y="852" text-anchor="middle" font-size="10" fill="#7b1fa2">(D,)</text>
+
+  <!-- 7b -->
+  <rect x="60" y="864" width="470" height="44" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+  <text x="295" y="882" text-anchor="middle" font-size="11" fill="#4a148c"><tspan font-weight="600">7b</tspan>  LOO residual per template</text>
+  <text x="295" y="896" text-anchor="middle" font-size="11" fill="#7b1fa2">loo_residual_i = x̂ − (recon − a_inh_i · w_i)     (k, D)</text>
+  <text x="295" y="904" text-anchor="middle" font-size="9" fill="#9c27b0"></text>
+
+  <!-- 7c -->
+  <rect x="60" y="916" width="470" height="34" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+  <text x="295" y="932" text-anchor="middle" font-size="11" fill="#4a148c"><tspan font-weight="600">7c</tspan>  Normalize → target_i = loo_residual_i / ‖loo_residual_i‖</text>
+  <text x="295" y="946" text-anchor="middle" font-size="10" fill="#7b1fa2">(k, D)</text>
+
+  <!-- 7d -->
+  <rect x="60" y="958" width="470" height="44" rx="5" fill="#ede7f6" stroke="#673ab7" stroke-width="1"/>
+  <text x="295" y="976" text-anchor="middle" font-size="11" fill="#311b92"><tspan font-weight="600">7d</tspan>  Project target onto tangent plane at w_i</text>
+  <text x="295" y="990" text-anchor="middle" font-size="11" fill="#4527a0">τ_i = target_i − (target_i · w_i) w_i   →   τ̂_i = τ_i / ‖τ_i‖</text>
+  <text x="295" y="998" text-anchor="middle" font-size="9" fill="#673ab7"></text>
+
+  <!-- 7e -->
+  <rect x="60" y="1010" width="470" height="44" rx="5" fill="#ede7f6" stroke="#673ab7" stroke-width="1"/>
+  <text x="295" y="1028" text-anchor="middle" font-size="11" fill="#311b92"><tspan font-weight="600">7e</tspan>  Geodesic rotation (active templates only)</text>
+  <text x="295" y="1044" text-anchor="middle" font-size="11" fill="#4527a0">θ = η · ‖τ‖    w_new = w·cos(θ) + τ̂·sin(θ)</text>
+
+  <!-- 7f -->
+  <rect x="60" y="1062" width="470" height="44" rx="5" fill="#ede7f6" stroke="#673ab7" stroke-width="1"/>
+  <text x="295" y="1080" text-anchor="middle" font-size="11" fill="#311b92"><tspan font-weight="600">7f</tspan>  Re-center &amp; re-normalize</text>
+  <text x="295" y="1094" text-anchor="middle" font-size="11" fill="#4527a0">w -= mean(w)   →   w /= ‖w‖</text>
+  <text x="295" y="1102" text-anchor="middle" font-size="9" fill="#673ab7"></text>
+
+  <!-- 7 → 8 arrow -->
+  <line x1="295" y1="1110" x2="295" y2="1130" stroke="#6a5acd" stroke-width="1.2"/>
+  <line x1="295" y1="1130" x2="360" y2="1130" stroke="#6a5acd" stroke-width="1.2"/>
+  <line x1="360" y1="1130" x2="360" y2="1165" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ═══ STEP 8: Outputs ═══ -->
+  <rect x="30" y="1168" width="20" height="36" rx="4" fill="#00695c"/>
+  <text x="40" y="1191" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">8</text>
+  <rect x="55" y="1168" width="480" height="36" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.2"/>
+  <text x="295" y="1184" text-anchor="middle" font-weight="600" fill="#004d40">Outputs</text>
+  <text x="295" y="1198" text-anchor="middle" font-size="11" fill="#00695c">weights, activations, weights_preview, activations_preview, info</text>
+
+  <!-- Legend -->
+  <rect x="30" y="1240" width="660" height="60" rx="8" fill="#fff" stroke="#ddd" stroke-width="1"/>
+  <rect x="50" y="1255" width="14" height="14" rx="2" fill="#e3f2fd" stroke="#1976d2" stroke-width="1"/>
+  <text x="70" y="1266" font-size="11" fill="#444">Inference</text>
+  <rect x="150" y="1255" width="14" height="14" rx="2" fill="#e8eaf6" stroke="#3f51b5" stroke-width="1"/>
+  <text x="170" y="1266" font-size="11" fill="#444">Inhibition</text>
+  <rect x="260" y="1255" width="14" height="14" rx="2" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="280" y="1266" font-size="11" fill="#444">Recurrence</text>
+  <rect x="370" y="1255" width="14" height="14" rx="2" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+  <text x="390" y="1266" font-size="11" fill="#444">Learning</text>
+  <rect x="470" y="1255" width="14" height="14" rx="2" fill="#fff3e0" stroke="#ff9800" stroke-width="1"/>
+  <text x="490" y="1266" font-size="11" fill="#444">Guard / Branch</text>
+  <rect x="590" y="1255" width="14" height="14" rx="2" fill="#e0f2f1" stroke="#00695c" stroke-width="1"/>
+  <text x="610" y="1266" font-size="11" fill="#444">Output</text>
+  <text x="360" y="1290" text-anchor="middle" font-size="10" fill="#999">↻ Step 6 feeds back into Step 2 across ticks</text>
+</svg>

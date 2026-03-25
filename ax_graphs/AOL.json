@@ -1,0 +1,208 @@
+{
+  "version": 5,
+  "kind": "graph",
+  "name": "AOL",
+  "viewport": {
+    "pan": {
+      "x": 687.8982435841071,
+      "y": 239.44837461320748
+    },
+    "zoom": 1.419609691224484
+  },
+  "editor": {
+    "drawer_collapsed": false,
+    "drawer_width": 336,
+    "console_collapsed": true,
+    "console_height": 216,
+    "max_hz_enabled": true,
+    "max_hz_value": 60
+  },
+  "nodes": [
+    {
+      "id": "InputDigitMNIST_1",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": -11.983006476345558,
+        "y": 128.95848916400888
+      },
+      "fields": {
+        "digit_filter": -1,
+        "repeat": 50,
+        "blank_steps": 0
+      },
+      "states": {
+        "idx": 13482,
+        "repeat_counter": 46
+      }
+    },
+    {
+      "id": "Reconstruction_3",
+      "type": "Reconstruction",
+      "name": "Reconstruction",
+      "position": {
+        "x": 765.5220762914744,
+        "y": 162.440661271005
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "SparseIndexHashEncode_6",
+      "type": "SparseIndexHashEncode",
+      "name": "SparseIndexHashEncode",
+      "position": {
+        "x": -357.2026186792462,
+        "y": 773.9115180732773
+      },
+      "fields": {
+        "sparsity": 94.0,
+        "vector_size": 28,
+        "max_value": 10
+      },
+      "states": {}
+    },
+    {
+      "id": "MatrixZeros_7",
+      "type": "MatrixZeros",
+      "name": "MatrixZeros",
+      "position": {
+        "x": -155.19568311637747,
+        "y": -37.51148129104831
+      },
+      "fields": {
+        "rows": 1,
+        "cols": 28
+      },
+      "states": {}
+    },
+    {
+      "id": "MatrixCrop_8",
+      "type": "MatrixCrop",
+      "name": "MatrixCrop",
+      "position": {
+        "x": 1043.7489865788702,
+        "y": 238.64817691353636
+      },
+      "fields": {
+        "x_start": 0,
+        "y_start": 28,
+        "x_end": 28,
+        "y_end": 29
+      },
+      "states": {}
+    },
+    {
+      "id": "DisplayVector_9",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 772.6748160319977,
+        "y": 560.6467753017371
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "DisplayVector_11",
+      "type": "DisplayVector",
+      "name": "DisplayVector",
+      "position": {
+        "x": 854.0992032602655,
+        "y": -258.522256717048
+      },
+      "fields": {
+        "scale_mode": "auto",
+        "vmin": -1.0,
+        "vmax": 1.0
+      },
+      "states": {}
+    },
+    {
+      "id": "IterativeCompetitiveLearning_18",
+      "type": "IterativeCompetitiveLearning",
+      "name": "IterativeCompetitiveLearning",
+      "position": {
+        "x": 449.3060337881723,
+        "y": -65.32129986745952
+      },
+      "fields": {
+        "amount": 25,
+        "step_fraction": 0.001,
+        "temperature": 0.19,
+        "is_learning": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/AOL_IterativeCompetitiveLearning_18_w.npy"
+        }
+      }
+    },
+    {
+      "id": "LGN_19",
+      "type": "LGN",
+      "name": "LGN",
+      "position": {
+        "x": 163.02258859952485,
+        "y": -113.40404567673124
+      },
+      "fields": {},
+      "states": {}
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "InputDigitMNIST_1",
+      "from_output": "output_digit",
+      "to_node": "SparseIndexHashEncode_6",
+      "to_input": "i_value"
+    },
+    {
+      "from_node": "Reconstruction_3",
+      "from_output": "result",
+      "to_node": "MatrixCrop_8",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "MatrixCrop_8",
+      "from_output": "output",
+      "to_node": "DisplayVector_9",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "IterativeCompetitiveLearning_18",
+      "from_output": "activations",
+      "to_node": "DisplayVector_11",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "InputDigitMNIST_1",
+      "from_output": "output_pattern",
+      "to_node": "LGN_19",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "IterativeCompetitiveLearning_18",
+      "from_output": "weights",
+      "to_node": "Reconstruction_3",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "IterativeCompetitiveLearning_18",
+      "from_output": "activations",
+      "to_node": "Reconstruction_3",
+      "to_input": "activations"
+    },
+    {
+      "from_node": "InputDigitMNIST_1",
+      "from_output": "output_pattern",
+      "to_node": "IterativeCompetitiveLearning_18",
+      "to_input": "inputs"
+    }
+  ]
+}
