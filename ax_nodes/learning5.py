@@ -17,13 +17,14 @@ class CSHL(Node):
     """Contrast-Structure Hypothesis Learning.
 
     Templates are competing whole-input hypotheses on the unit hypersphere.
-    Activations are partial correlations (computed directly via G^{-1}).
+    Activations are exact partial correlations (computed directly via G^{-1}).
 
     Each tick:
         1. L2-normalize input (assumed already mean-centered by LGN)
         2. Pearson correlations: c = W x_hat
         3. Regression coefficients: beta = G^{-1} c
-        4. Partial correlations: a_i = beta_i / sqrt(G^{-1}_{ii})
+        4. Partial correlations:
+           a_i = beta_i / sqrt(G^{-1}_{ii} * (1 - c^T G^{-1} c))
         5. Learning: rotation toward/away from input, scaled by partial correlation
     """
 
@@ -98,12 +99,13 @@ class CSHL(Node):
             return
         x_hat = x / x_norm
 
-        # 2. Partial correlations (direct solve)
+        # 2. Exact partial correlations (direct solve)
         c = w @ x_hat                                   # (k,) Pearson correlations
         G = w @ w.T                                      # (k, k) Gram matrix
         G_inv = np.linalg.inv(G + eps * np.eye(k))      # regularized inverse
         beta = G_inv @ c                                 # regression coefficients
-        a = beta / np.sqrt(np.maximum(np.diag(G_inv), eps))  # partial correlations
+        residual_var = np.maximum(1.0 - np.dot(c, beta), eps)
+        a = beta / np.sqrt(np.maximum(np.diag(G_inv), eps) * residual_var)
 
         # 3. Learning — rotation toward/away from input, scaled by partial correlation
         if self.is_learning:
