@@ -117,8 +117,7 @@ class CSHL(Node):
             tau_hat = np.where(tau_norm > eps, tau / tau_norm, 0.0)
 
             # Rotation angle: scaled by partial correlation
-            theta = (eta * np.maximum(a, 0.0))[:, None]  # positive only
-            #theta = (eta * a)[:, None]  # (k, 1)
+            theta = (eta * a)[:, None]  # (k, 1)
             w_new = w * np.cos(theta) + tau_hat * np.sin(theta)
 
             # Renormalize + re-center
@@ -129,8 +128,7 @@ class CSHL(Node):
         # 4. Outputs
         self.weights = self.w
         self.raw_activations = c
-        #self.activations = a
-        self.activations = np.maximum(a, 0.0)
+        self.activations = a
 
         self.weights_preview = to_display_grid(self.w, patch_shape=self._input_shape)
         self.activations_preview = to_display_grid(a, patch_shape=self._input_shape)
