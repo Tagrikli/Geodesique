@@ -4,14 +4,14 @@
   "name": "CSHL",
   "viewport": {
     "pan": {
-      "x": 648.076282312626,
-      "y": 246.4808980859055
+      "x": 204.29393626926117,
+      "y": 224.33407505063224
     },
-    "zoom": 1.4196096912244893
+    "zoom": 1.1859176150850044
   },
   "editor": {
     "drawer_collapsed": false,
-    "drawer_width": 307,
+    "drawer_width": 200,
     "console_collapsed": true,
     "console_height": 216,
     "max_hz_enabled": true,
@@ -19,12 +19,126 @@
   },
   "nodes": [
     {
-      "id": "DisplayVector_2",
+      "id": "InputDigitMNIST_16",
+      "type": "InputDigitMNIST",
+      "name": "InputDigitMNIST",
+      "position": {
+        "x": -837.7887587857031,
+        "y": -33.837870523908705
+      },
+      "fields": {
+        "digit_filter": -1,
+        "repeat": 1,
+        "blank_steps": 0
+      },
+      "states": {
+        "idx": 32236,
+        "repeat_counter": 0
+      }
+    },
+    {
+      "id": "ConvReconstruction_17",
+      "type": "ConvReconstruction",
+      "name": "ConvReconstruction",
+      "position": {
+        "x": 376.49180460120556,
+        "y": 652.786483994621
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "ConvCSHL_18",
+      "type": "ConvCSHL",
+      "name": "ConvCSHL",
+      "position": {
+        "x": -49.345578501266914,
+        "y": -124.65025269204536
+      },
+      "fields": {
+        "amount": 36,
+        "step_fraction": 0.007,
+        "is_learning": false
+      },
+      "states": {
+        "w": null
+      }
+    },
+    {
+      "id": "ConvConfig_19",
+      "type": "ConvConfig",
+      "name": "ConvConfig",
+      "position": {
+        "x": -543.1913093071144,
+        "y": -284.71025352552977
+      },
+      "fields": {
+        "kernel_size": 4
+      },
+      "states": {}
+    },
+    {
+      "id": "ConvLGN_20",
+      "type": "ConvLGN",
+      "name": "ConvLGN",
+      "position": {
+        "x": -385.24121499436365,
+        "y": -109.6298916409747
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "ConvCSHL_22",
+      "type": "ConvCSHL",
+      "name": "ConvCSHL",
+      "position": {
+        "x": 411.2253846843429,
+        "y": -264.878389742463
+      },
+      "fields": {
+        "amount": 25,
+        "step_fraction": 0.046,
+        "is_learning": true
+      },
+      "states": {
+        "w": {
+          "_type": "ndarray_ref",
+          "file": "ax_data/CSHL_ConvCSHL_22_w.npy"
+        }
+      }
+    },
+    {
+      "id": "ConvConfig_23",
+      "type": "ConvConfig",
+      "name": "ConvConfig",
+      "position": {
+        "x": 14.313738678626123,
+        "y": -266.6542679764267
+      },
+      "fields": {
+        "kernel_size": 7
+      },
+      "states": {}
+    },
+    {
+      "id": "ConvReconstruction_24",
+      "type": "ConvReconstruction",
+      "name": "ConvReconstruction",
+      "position": {
+        "x": 855.3426786688917,
+        "y": 81.09605563978153
+      },
+      "fields": {},
+      "states": {}
+    },
+    {
+      "id": "DisplayVector_25",
       "type": "DisplayVector",
       "name": "DisplayVector",
       "position": {
-        "x": 680.6342816045546,
-        "y": -19.023777135265618
+        "x": 804.3465083503199,
+        "y": -369.83463425027935
       },
       "fields": {
         "scale_mode": "auto",
@@ -32,212 +146,92 @@
         "vmax": 1.0
       },
       "states": {}
-    },
-    {
-      "id": "CSHL_22",
-      "type": "CSHL",
-      "name": "CSHL",
-      "position": {
-        "x": 277.41669034457664,
-        "y": -39.65611975652132
-      },
-      "fields": {
-        "amount": 100,
-        "step_fraction": 0.024,
-        "is_learning": true
-      },
-      "states": {
-        "w": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/CSHL_CSHL_22_w.npy"
-        }
-      }
-    },
-    {
-      "id": "Reconstruction_23",
-      "type": "Reconstruction",
-      "name": "Reconstruction",
-      "position": {
-        "x": 952.333866190736,
-        "y": 482.41654088940015
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "AttentionMask_25",
-      "type": "AttentionMask",
-      "name": "AttentionMask",
-      "position": {
-        "x": -51.02539019545395,
-        "y": 594.5634949872804
-      },
-      "fields": {
-        "width": 28,
-        "height": 28,
-        "radius": 8.0
-      },
-      "states": {
-        "center_row": 15,
-        "center_col": 12,
-        "cached_mask": {
-          "_type": "ndarray_ref",
-          "file": "ax_data/CSHL_AttentionMask_25_cached_mask.npy"
-        }
-      }
-    },
-    {
-      "id": "Multiply_26",
-      "type": "Multiply",
-      "name": "Multiply",
-      "position": {
-        "x": -250.4171712440891,
-        "y": 426.4287007399445
-      },
-      "fields": {},
-      "states": {}
-    },
-    {
-      "id": "DisplayHeatmap_28",
-      "type": "DisplayHeatmap",
-      "name": "DisplayHeatmap",
-      "position": {
-        "x": 655.1806954722103,
-        "y": 424.2431336944462
-      },
-      "fields": {
-        "colormap": "grayscale",
-        "scale_mode": "auto",
-        "vmin": -1.0,
-        "vmax": 1.0,
-        "use_grid_display": false
-      },
-      "states": {}
-    },
-    {
-      "id": "SparseIndexHashEncode_31",
-      "type": "SparseIndexHashEncode",
-      "name": "SparseIndexHashEncode",
-      "position": {
-        "x": -827.9027356434742,
-        "y": 477.6821460104113
-      },
-      "fields": {
-        "sparsity": 95.0,
-        "vector_size": 28,
-        "max_value": 100
-      },
-      "states": {}
-    },
-    {
-      "id": "ChannelConcat_32",
-      "type": "ChannelConcat",
-      "name": "ChannelConcat",
-      "position": {
-        "x": -73.55365079662442,
-        "y": -149.79019615576792
-      },
-      "fields": {
-        "w0": 1.0,
-        "w1": 1.0,
-        "w2": 1.0,
-        "w3": 1.0
-      },
-      "states": {}
-    },
-    {
-      "id": "InputFashionMNIST_34",
-      "type": "InputFashionMNIST",
-      "name": "InputFashionMNIST",
-      "position": {
-        "x": -646.6562636434655,
-        "y": -90.29714350272303
-      },
-      "fields": {
-        "category_filter": -1,
-        "repeat": 1,
-        "blank_steps": 0
-      },
-      "states": {
-        "idx": 2562,
-        "repeat_counter": 0
-      }
-    },
-    {
-      "id": "MatrixOnes_35",
-      "type": "MatrixOnes",
-      "name": "MatrixOnes",
-      "position": {
-        "x": -349.95437959290007,
-        "y": 588.8446271358644
-      },
-      "fields": {
-        "rows": 28,
-        "cols": 28
-      },
-      "states": {}
     }
   ],
   "connections": [
     {
-      "from_node": "CSHL_22",
+      "from_node": "ConvConfig_19",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvLGN_20",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvLGN_20",
+      "from_output": "output_data",
+      "to_node": "ConvCSHL_18",
+      "to_input": "input_data"
+    },
+    {
+      "from_node": "ConvLGN_20",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvCSHL_18",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "ConvCSHL_18",
       "from_output": "weights",
-      "to_node": "Reconstruction_23",
+      "to_node": "ConvReconstruction_17",
       "to_input": "weights"
     },
     {
-      "from_node": "CSHL_22",
-      "from_output": "activations",
-      "to_node": "DisplayVector_2",
+      "from_node": "ConvCSHL_18",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvReconstruction_17",
+      "to_input": "input_kernel_size"
+    },
+    {
+      "from_node": "InputDigitMNIST_16",
+      "from_output": "output_pattern",
+      "to_node": "ConvLGN_20",
       "to_input": "input_data"
     },
     {
-      "from_node": "Reconstruction_23",
-      "from_output": "result",
-      "to_node": "DisplayHeatmap_28",
-      "to_input": "input_data"
+      "from_node": "ConvConfig_23",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvCSHL_22",
+      "to_input": "input_kernel_size"
     },
     {
-      "from_node": "CSHL_22",
+      "from_node": "ConvCSHL_22",
+      "from_output": "weights",
+      "to_node": "ConvReconstruction_24",
+      "to_input": "weights"
+    },
+    {
+      "from_node": "ConvCSHL_22",
       "from_output": "activations",
-      "to_node": "Reconstruction_23",
+      "to_node": "ConvReconstruction_24",
       "to_input": "activations"
     },
     {
-      "from_node": "Multiply_26",
-      "from_output": "output",
-      "to_node": "ChannelConcat_32",
-      "to_input": "ch0"
+      "from_node": "ConvCSHL_22",
+      "from_output": "output_kernel_size",
+      "to_node": "ConvReconstruction_24",
+      "to_input": "input_kernel_size"
     },
     {
-      "from_node": "SparseIndexHashEncode_31",
-      "from_output": "o_output",
-      "to_node": "ChannelConcat_32",
-      "to_input": "ch1"
+      "from_node": "ConvCSHL_18",
+      "from_output": "activations",
+      "to_node": "ConvCSHL_22",
+      "to_input": "input_data"
     },
     {
-      "from_node": "ChannelConcat_32",
-      "from_output": "output",
-      "to_node": "CSHL_22",
-      "to_input": "inputs"
+      "from_node": "ConvReconstruction_24",
+      "from_output": "result",
+      "to_node": "ConvReconstruction_17",
+      "to_input": "activations"
     },
     {
-      "from_node": "InputFashionMNIST_34",
-      "from_output": "output_pattern",
-      "to_node": "Multiply_26",
-      "to_input": "input_a"
+      "from_node": "ConvLGN_20",
+      "from_output": "output_means",
+      "to_node": "ConvReconstruction_17",
+      "to_input": "input_means"
     },
     {
-      "from_node": "InputFashionMNIST_34",
-      "from_output": "output_category",
-      "to_node": "SparseIndexHashEncode_31",
-      "to_input": "i_value"
-    },
-    {
-      "from_node": "MatrixOnes_35",
-      "from_output": "output",
-      "to_node": "Multiply_26",
-      "to_input": "input_b"
+      "from_node": "ConvCSHL_22",
+      "from_output": "activations",
+      "to_node": "DisplayVector_25",
+      "to_input": "input_data"
     }
   ]
 }

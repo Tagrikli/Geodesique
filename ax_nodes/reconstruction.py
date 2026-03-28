@@ -56,6 +56,7 @@ class ConvReconstruction(Node):
         activations:       3D activation tensor (grid_h, grid_w, K) from ConvSRL
         input_kernel_size: Kernel size (int)
         input_means:       Per-patch means from ConvLGN (n_patches,), optional
+        input_norms:       Per-patch L2 norms from ConvLGN (n_patches,), optional
 
     Output Ports:
         result: Reconstructed array (2D or 3D depending on channel count)
@@ -65,6 +66,7 @@ class ConvReconstruction(Node):
     activations = InputPort("Activations", np.ndarray)
     input_kernel_size = InputPort("Kernel Size", int)
     input_means = InputPort("Patch Means", np.ndarray)
+    input_norms = InputPort("Patch Norms", np.ndarray)
 
     result = OutputPort("Result", np.ndarray)
 
@@ -104,6 +106,15 @@ class ConvReconstruction(Node):
 
         # Reconstruct each patch: (n_patches, dim) = (n_patches, K) @ (K, dim)
         recon_patches = act_patches @ w
+
+        # Scale by patch norms to undo L2-normalization
+        if self.input_norms is not None:
+            norms = np.asarray(self.input_norms, dtype=np.float64)
+            if norms.shape[0] != n_patches:
+                raise ValueError(
+                    f"patch norms length {norms.shape[0]} does not match patch count {n_patches}"
+                )
+            recon_patches = recon_patches * norms[:, None]
 
         # Add back per-patch means (only for first layer with ConvLGN)
         if self.input_means is not None:

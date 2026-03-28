@@ -17,15 +17,15 @@ class CSHL(Node):
     """Contrast-Structure Hypothesis Learning.
 
     Templates are competing whole-input hypotheses on the unit hypersphere.
-    Activations are exact partial correlations (computed directly via G^{-1}).
+    Activations are semi-partial correlations (computed directly via G^{-1}).
 
     Each tick:
         1. L2-normalize input (assumed already mean-centered by LGN)
         2. Pearson correlations: c = W x_hat
         3. Regression coefficients: beta = G^{-1} c
-        4. Partial correlations:
-           a_i = beta_i / sqrt(G^{-1}_{ii} * (1 - c^T G^{-1} c))
-        5. Learning: rotation toward/away from input, scaled by partial correlation
+        4. Semi-partial correlations:
+           a_i = beta_i / sqrt(1 - c^T G^{-1} c)
+        5. Learning: rotation toward/away from input, scaled by semi-partial correlation
     """
 
     inputs = InputPort("Input", np.ndarray)
@@ -39,6 +39,7 @@ class CSHL(Node):
     weights = OutputPort("Weights", np.ndarray)
     raw_activations = OutputPort("Raw Activations", np.ndarray)
     activations = OutputPort("Activations", np.ndarray)
+    input_shape = OutputPort("Input Shape", np.ndarray)
 
     w = State("Weights")
 
@@ -56,6 +57,7 @@ class CSHL(Node):
         self._input_shape = None
         self._dim = None
         self.w = None
+
     def _on_reset(self, _params=None):
         if self._dim is not None:
             self._init_weights(self._dim)
@@ -99,13 +101,14 @@ class CSHL(Node):
             return
         x_hat = x / x_norm
 
-        # 2. Exact partial correlations (direct solve)
-        c = w @ x_hat                                   # (k,) Pearson correlations
-        G = w @ w.T                                      # (k, k) Gram matrix
-        G_inv = np.linalg.inv(G + eps * np.eye(k))      # regularized inverse
-        beta = G_inv @ c                                 # regression coefficients
-        residual_var = np.maximum(1.0 - np.dot(c, beta), eps)
-        a = beta / np.sqrt(np.maximum(np.diag(G_inv), eps) * residual_var)
+        # 2. Correlations
+        a = w @ x_hat  # (k,) Pearson correlations
+
+        # Top-1 by magnitude: only the strongest template gets a learning signal
+        winner = np.argmax(np.abs(a))
+        a_top1 = np.zeros_like(a)
+        a_top1[winner] = a[winner]
+        a = a_top1
 
         # 3. Learning — rotation toward/away from input, scaled by partial correlation
         if self.is_learning:
@@ -122,37 +125,43 @@ class CSHL(Node):
             theta = (eta * a)[:, None]  # (k, 1)
             w_new = w * np.cos(theta) + tau_hat * np.sin(theta)
 
-            # Renormalize + re-center
-            w_new -= np.mean(w_new, axis=1, keepdims=True)
-            w_new /= np.linalg.norm(w_new, axis=1, keepdims=True) + eps
+            # Renormalize + re-center (commented out to track drift)
+            # w_new -= np.mean(w_new, axis=1, keepdims=True)
+            # w_new /= np.linalg.norm(w_new, axis=1, keepdims=True) + eps
             self.w = w_new
 
         # 4. Outputs
         self.weights = self.w
-        self.raw_activations = c
+        self.raw_activations = a
         self.activations = a
+        if self._input_shape is not None:
+            self.input_shape = np.array(self._input_shape, dtype=np.int64)
 
         self.weights_preview = to_display_grid(self.w, patch_shape=self._input_shape)
         self.activations_preview = to_display_grid(a, patch_shape=self._input_shape)
-        self.info = f"k={k}  dim={self._dim}  ||x||={x_norm:.3f}"
+        w_cur = np.asarray(self.w, dtype=np.float64)
+        norms = np.linalg.norm(w_cur, axis=1)
+        means = np.mean(w_cur, axis=1)
+        self.info = (
+            f"k={k}  dim={self._dim}  ||x||={x_norm:.3f}\n"
+            f"template norms  — min={norms.min():.4f}  max={norms.max():.4f}  mean={norms.mean():.4f}\n"
+            f"template means  — min={means.min():.6f}  max={means.max():.6f}  mean={means.mean():.6f}"
+        )
 
 
 @branch("Hypercolumn/Conv")
 class ConvCSHL(Node):
-    """Convolutional CSHL — partial-correlation activations with shared weights.
+    """Convolutional CSHL — shared-weight correlations on the unit hypersphere.
 
-    Tiles the input into non-overlapping PxP patches, computes partial
-    correlations per patch using a single shared G^{-1}, and accumulates
-    geodesic weight updates across all patches.
+    Tiles the input into non-overlapping PxP patches, computes Pearson
+    correlations per patch, selects the top-1 winner by magnitude, and
+    applies geodesic weight updates across all patches.
 
     Each tick:
         1. Tile input into non-overlapping patches
-        2. Gram matrix inverse (once): G_inv = (W W^T + eps I)^{-1}
-        3. Per patch (vectorized):
-           c = W x_hat            (Pearson correlations)
-           beta = G_inv c         (regression coefficients)
-           a = beta / sqrt(diag(G_inv))  (partial correlations)
-        4. Learning: accumulate tangents across patches, single rotation
+        2. Per patch: c = W x_hat  (Pearson correlations)
+        3. Top-1 by magnitude: only the strongest template gets a learning signal
+        4. Learning: rotation toward/away from input, scaled by correlation
     """
 
     input_data = InputPort("Input", np.ndarray)
@@ -167,6 +176,8 @@ class ConvCSHL(Node):
     weights = OutputPort("Weights", np.ndarray)
     raw_activations = OutputPort("Raw Act", np.ndarray)
     activations = OutputPort("Activations", np.ndarray)
+    patch_means = OutputPort("Patch Means", np.ndarray)
+    patch_norms = OutputPort("Patch Norms", np.ndarray)
     output_kernel_size = OutputPort("Kernel Size", int)
 
     weights_conv_preview = Heatmap(
@@ -221,9 +232,7 @@ class ConvCSHL(Node):
             raise ValueError(f"ConvCSHL expects 2D or 3D input, got {inp.ndim}D")
 
         if H % P != 0 or W % P != 0:
-            raise ValueError(
-                f"ConvCSHL input ({H}, {W}) not divisible by kernel {P}"
-            )
+            raise ValueError(f"ConvCSHL input ({H}, {W}) not divisible by kernel {P}")
         grid_h = H // P
         grid_w = W // P
         dim = P * P * C
@@ -251,22 +260,22 @@ class ConvCSHL(Node):
         w = np.asarray(self.w, dtype=np.float64)
         k = w.shape[0]
 
-        # L2-normalize each patch (already mean-centered by upstream)
-        patch_norms = np.linalg.norm(patches, axis=1, keepdims=True)
-        valid = (patch_norms.ravel() > eps)
-        X_hat = np.where(patch_norms > eps, patches / patch_norms, 0.0)
+        # Mean-center each patch
+        p_means = np.mean(patches, axis=1, keepdims=True)
+        patches = patches - p_means
 
-        # Gram matrix inverse (shared across all patches)
-        G = w @ w.T
-        G_inv = np.linalg.inv(G + eps * np.eye(k))
-        G_inv_diag_sqrt = np.sqrt(np.maximum(np.diag(G_inv), eps))
+        # L2-normalize each patch
+        patch_norms = np.linalg.norm(patches, axis=1, keepdims=True)
+        valid = patch_norms.ravel() > eps
+        X_hat = np.where(patch_norms > eps, patches / patch_norms, 0.0)
 
         # Pearson correlations: (n_patches, k)
         C_raw = X_hat @ w.T
 
-        # Partial correlations: (n_patches, k)
-        beta = C_raw @ G_inv.T
-        A = beta / G_inv_diag_sqrt[None, :]
+        # Top-1 by magnitude per patch
+        winners = np.argmax(np.abs(C_raw), axis=1)  # (n_patches,)
+        A = np.zeros_like(C_raw)
+        A[np.arange(n_patches), winners] = C_raw[np.arange(n_patches), winners]
 
         # Learning — update weights one patch at a time
         if self.is_learning:
@@ -286,22 +295,26 @@ class ConvCSHL(Node):
                 theta = (eta * a)[:, None]
                 w = w * np.cos(theta) + tau_hat * np.sin(theta)
 
-            w -= np.mean(w, axis=1, keepdims=True)
-            w /= np.linalg.norm(w, axis=1, keepdims=True) + eps
+            #w -= np.mean(w, axis=1, keepdims=True)
+            #w /= np.linalg.norm(w, axis=1, keepdims=True) + eps
             self.w = w
 
         # Outputs as 3D tensors (grid_h, grid_w, k)
         self.weights = self.w
         self.raw_activations = C_raw.reshape(grid_h, grid_w, k)
         self.activations = A.reshape(grid_h, grid_w, k)
+        self.patch_means = p_means.ravel()
+        self.patch_norms = patch_norms.ravel()
         self.output_kernel_size = P
 
         self.weights_conv_preview = to_display_grid(self.w)
         self.activations_conv_preview = to_display_grid(A)
+        w_cur = np.asarray(self.w, dtype=np.float64)
+        norms = np.linalg.norm(w_cur, axis=1)
+        means = np.mean(w_cur, axis=1)
         self.info = (
-            f"kernel={P}x{P}  dim={dim}  "
-            f"C={C}  "
-            f"patches={n_patches} ({grid_h}x{grid_w})  "
-            f"templates={k}  "
-            f"out=({grid_h},{grid_w},{k})"
+            f"kernel={P}x{P}  dim={dim}  k={k}  C={C}  patches={n_patches} ({grid_h}x{grid_w})\n"
+            f"output=({grid_h}, {grid_w}, {k})  input=({H}, {W})\n"
+            f"template norms  — min={norms.min():.4f}  max={norms.max():.4f}  mean={norms.mean():.4f}\n"
+            f"template means  — min={means.min():.6f}  max={means.max():.6f}  mean={means.mean():.6f}"
         )
