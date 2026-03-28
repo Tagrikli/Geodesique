@@ -73,3 +73,31 @@ When only the label is provided (image dimensions zeroed), the winning template'
 With full one-hot labels, only one template is allocated per digit class. This happens because the one-hot encoding has zero within-class variation — every 5 gets the same label. The label dimensions dominate the correlation (perfectly consistent, high magnitude within class), so one template aligns to "average 5 + 5-label" and wins every 5. There is no within-class pressure to allocate a second template.
 
 This is not a model failure — the model is doing exactly what the input geometry demands. The label has between-class discriminative power but zero within-class discriminative power. To get multiple templates per class, the concatenated signal would need to carry within-class distinctions (e.g., a richer encoding) or the label's influence would need to be scaled down so the visual dimensions can break ties within a class.
+
+---
+
+## Sparsity Effects at the Second Layer
+
+### Setup
+
+Layer 1: 4x4 kernel convolution on 28x28 MNIST with 36 templates, producing a (7,7,36) output. Top-1 selection means each spatial position has exactly one nonzero activation out of 36 channels.
+
+Layer 2: 7x7 kernel with 25 templates, receiving the full (7,7,36) output as a single flattened 1764-dim vector. Of those 1764 dimensions, only ~49 are nonzero (one per spatial position).
+
+### Sparsity Increases Selectivity
+
+At Layer 1 (dense pixel input), a single template can dominate an entire digit class because the raw pixel correlation between two different instances of the same digit is high — there's enough shared dense structure for one template to match them all.
+
+At Layer 2, the same digits have lower mutual correlation. Two different 5s that looked very similar in pixel space may have different L1 winners at some spatial positions. In the sparse L2 input, a mismatch at even one position means different dimensions are nonzero — and different nonzero dimensions contribute nothing to the dot product. The correlation drops.
+
+The result: a single L2 template can no longer capture all instances of a digit. The system is forced to allocate multiple templates per digit class, each specializing on a sub-variant — a specific configuration of L1 winners across the spatial grid.
+
+### Sparsity Does What Labels Couldn't
+
+The one-template-per-digit problem at L1 (with label concatenation) arose because the label had zero within-class variation. The sparse L1 code solves this without any label: it introduces within-class variation by discretizing each spatial position independently. Two 5s that differ in one local patch produce different sparse codes, forcing L2 to either tolerate the mismatch (lower correlation) or allocate a second template.
+
+The hierarchy naturally increases selectivity pressure through the representation change alone — no extra parameters, no feedback, no labels.
+
+### Correlation Magnitude and Reconstruction Quality
+
+When an L2 template achieves high correlation with its input, its reconstruction is faithful — the specific sparse configuration is well captured. When correlation is low, the reconstruction is poor. High L2 correlation means the template matches the exact constellation of L1 winners, which is a much more specific claim than matching a dense pixel pattern. The reconstruction quality at L2 is therefore a direct measure of how well the hierarchy has tiled the space of L1 activation configurations.
